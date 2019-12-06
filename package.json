@@ -8,10 +8,25 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "build": "lerna run build",
+    "dev": "lerna run --parallel dev"
+  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true
+  },
+  "dependencies": {
+    "lerna": "^3.19.0"
+  },
+  "lerna": {
+    "packages": [
+      "packages/*"
+    ],
+    "npmClient": "yarn",
+    "useWorkspaces": true,
+    "version": "1.1.3"
   }
 }

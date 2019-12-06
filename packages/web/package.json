@@ -3,5 +3,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "zackkrida",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "next": "^9.1.5-canary.13",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.15"
+  }
 }

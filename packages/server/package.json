@@ -1,7 +1,24 @@
 {
   "name": "@trakrite-intranet/server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "author": "zackkrida",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -b .",
+    "start": "node -r dotenv/config dist dotenv_config_path=../../.env",
+    "dev": "node -r dotenv/config dist dotenv_config_path=../../.env"
+  },
+  "dependencies": {
+    "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1",
+    "express": "^4.17.1",
+    "graphql-codegen": "^0.4.0",
+    "postgraphile": "^4.5.0",
+    "postgraphile-plugin-connection-filter": "^1.1.3",
+    "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
 }

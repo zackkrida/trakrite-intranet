@@ -1,0 +1,2 @@
+-- Instructions for creating the database
+-- Run 'createdb trakrite' in the terminal
