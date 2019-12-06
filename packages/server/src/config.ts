@@ -41,7 +41,7 @@ const pg: PostGraphileOptions = {
   appendPlugins: [FilterPlugin, PgSimplifyInflectorPlugin],
   skipPlugins: [NodePlugin],
   enhanceGraphiql: true,
-  exportGqlSchemaPath: 'schema.gql',
+  exportGqlSchemaPath: '../../schema.gql',
   enableQueryBatching: true,
   sortExport: true,
   setofFunctionsContainNulls: false,
