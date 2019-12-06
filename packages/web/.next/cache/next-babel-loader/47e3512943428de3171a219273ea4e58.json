@@ -1,1 +1,0 @@
-{"ast":null,"code":"export default Home;","map":{"version":3,"sources":["/Users/zack/Code/trakrite-intranet/packages/web/src/pages/index.tsx"],"names":["Home"],"mappings":"AAAA,eAAeA,IAAf","sourcesContent":["export default Home\n"]},"metadata":{},"sourceType":"module"}
