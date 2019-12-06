@@ -1,0 +1,17 @@
+{
+  "name": "trakrite-intranet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "zackkrida",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  }
+}
