@@ -66,6 +66,44 @@ input BooleanFilter {
   notIn: [Boolean!]
 }
 
+"""All input for the create `Mile` mutation."""
+input CreateMileInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Mile` to be created by this mutation."""
+  mile: MileInput!
+}
+
+"""The output of our create `Mile` mutation."""
+type CreateMilePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mile` that was created by this mutation."""
+  mile: Mile
+
+  """An edge for our `Mile`. May be used by Relay 1."""
+  mileEdge(
+    """The method to use when ordering `Mile`."""
+    orderBy: [MilesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MilesEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mile`."""
+  user: User
+}
+
 """A location in a connection that can be used for resuming pagination."""
 scalar Cursor
 
@@ -117,11 +155,239 @@ input DatetimeFilter {
   notIn: [Datetime!]
 }
 
+"""All input for the `deleteMile` mutation."""
+input DeleteMileInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: UUID!
+}
+
+"""The output of our delete `Mile` mutation."""
+type DeleteMilePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  deletedMileNodeId: ID
+
+  """The `Mile` that was deleted by this mutation."""
+  mile: Mile
+
+  """An edge for our `Mile`. May be used by Relay 1."""
+  mileEdge(
+    """The method to use when ordering `Mile`."""
+    orderBy: [MilesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MilesEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mile`."""
+  user: User
+}
+
+"""
+A filter to be used against Int fields. All fields are combined with a logical ‘and.’
+"""
+input IntFilter {
+  """
+  Not equal to the specified value, treating null like an ordinary value.
+  """
+  distinctFrom: Int
+
+  """Equal to the specified value."""
+  equalTo: Int
+
+  """Greater than the specified value."""
+  greaterThan: Int
+
+  """Greater than or equal to the specified value."""
+  greaterThanOrEqualTo: Int
+
+  """Included in the specified list."""
+  in: [Int!]
+
+  """
+  Is null (if `true` is specified) or is not null (if `false` is specified).
+  """
+  isNull: Boolean
+
+  """Less than the specified value."""
+  lessThan: Int
+
+  """Less than or equal to the specified value."""
+  lessThanOrEqualTo: Int
+
+  """Equal to the specified value, treating null like an ordinary value."""
+  notDistinctFrom: Int
+
+  """Not equal to the specified value."""
+  notEqualTo: Int
+
+  """Not included in the specified list."""
+  notIn: [Int!]
+}
+
 """
 A JSON Web Token defined by [RFC 7519](https://tools.ietf.org/html/rfc7519)
 which securely represents claims between two parties.
 """
 scalar JwtToken
+
+type Mile {
+  createdAt: Datetime
+  date: Datetime!
+  distance: Int!
+  id: UUID!
+  info: String!
+  updatedAt: Datetime
+
+  """Reads a single `User` that is related to this `Mile`."""
+  user: User
+  userId: UUID
+}
+
+"""
+A condition to be used against `Mile` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input MileCondition {
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `date` field."""
+  date: Datetime
+
+  """Checks for equality with the object’s `distance` field."""
+  distance: Int
+
+  """Checks for equality with the object’s `id` field."""
+  id: UUID
+
+  """Checks for equality with the object’s `info` field."""
+  info: String
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: UUID
+}
+
+"""
+A filter to be used against `Mile` object types. All fields are combined with a logical ‘and.’
+"""
+input MileFilter {
+  """Checks for all expressions in this list."""
+  and: [MileFilter!]
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `date` field."""
+  date: DatetimeFilter
+
+  """Filter by the object’s `distance` field."""
+  distance: IntFilter
+
+  """Filter by the object’s `id` field."""
+  id: UUIDFilter
+
+  """Filter by the object’s `info` field."""
+  info: StringFilter
+
+  """Negates the expression."""
+  not: MileFilter
+
+  """Checks for any expressions in this list."""
+  or: [MileFilter!]
+
+  """Filter by the object’s `updatedAt` field."""
+  updatedAt: DatetimeFilter
+
+  """Filter by the object’s `user` relation."""
+  user: UserFilter
+
+  """A related `user` exists."""
+  userExists: Boolean
+
+  """Filter by the object’s `userId` field."""
+  userId: UUIDFilter
+}
+
+"""An input for mutations affecting `Mile`"""
+input MileInput {
+  createdAt: Datetime
+  date: Datetime
+  distance: Int!
+  id: UUID
+  info: String!
+  updatedAt: Datetime
+  userId: UUID
+}
+
+"""Represents an update to a `Mile`. Fields that are set will be updated."""
+input MilePatch {
+  createdAt: Datetime
+  date: Datetime
+  distance: Int
+  id: UUID
+  info: String
+  updatedAt: Datetime
+  userId: UUID
+}
+
+"""A connection to a list of `Mile` values."""
+type MilesConnection {
+  """
+  A list of edges which contains the `Mile` and cursor to aid in pagination.
+  """
+  edges: [MilesEdge!]!
+
+  """A list of `Mile` objects."""
+  nodes: [Mile!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Mile` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Mile` edge in the connection."""
+type MilesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Mile` at the end of the edge."""
+  node: Mile!
+}
+
+"""Methods to use when ordering `Mile`."""
+enum MilesOrderBy {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  DATE_ASC
+  DATE_DESC
+  DISTANCE_ASC
+  DISTANCE_DESC
+  ID_ASC
+  ID_DESC
+  INFO_ASC
+  INFO_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  USER_ID_ASC
+  USER_ID_DESC
+}
 
 """
 The root mutation type which contains root level fields which mutate data.
@@ -137,6 +403,22 @@ type Mutation {
     input: AuthenticateInput!
   ): AuthenticatePayload
 
+  """Creates a single `Mile`."""
+  createMile(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateMileInput!
+  ): CreateMilePayload
+
+  """Deletes a single `Mile` using a unique key."""
+  deleteMile(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMileInput!
+  ): DeleteMilePayload
+
   """Registers a single user and creates an account in our app."""
   registerUser(
     """
@@ -144,6 +426,14 @@ type Mutation {
     """
     input: RegisterUserInput!
   ): RegisterUserPayload
+
+  """Updates a single `Mile` using a unique key and a patch."""
+  updateMile(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMileInput!
+  ): UpdateMilePayload
 
   """Updates a single `User` using a unique key and a patch."""
   updateUser(
@@ -173,6 +463,41 @@ type PageInfo {
 type Query {
   """Gets the user who was identified by our JWT."""
   currentUser: User
+  mile(id: UUID!): Mile
+
+  """Reads and enables pagination through a set of `Mile`."""
+  miles(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MileCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: MileFilter
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `Mile`."""
+    orderBy: [MilesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MilesConnection
 
   """
   Exposes the root query type nested one level down. This is helpful for Relay 1
@@ -365,6 +690,47 @@ input StringFilter {
   startsWithInsensitive: String
 }
 
+"""All input for the `updateMile` mutation."""
+input UpdateMileInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: UUID!
+
+  """
+  An object where the defined keys will be set on the `Mile` being updated.
+  """
+  patch: MilePatch!
+}
+
+"""The output of our update `Mile` mutation."""
+type UpdateMilePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mile` that was updated by this mutation."""
+  mile: Mile
+
+  """An edge for our `Mile`. May be used by Relay 1."""
+  mileEdge(
+    """The method to use when ordering `Mile`."""
+    orderBy: [MilesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MilesEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Mile`."""
+  user: User
+}
+
 """All input for the `updateUser` mutation."""
 input UpdateUserInput {
   """
@@ -428,6 +794,40 @@ type User {
 
   """The users last name."""
   lastName: String
+
+  """Reads and enables pagination through a set of `Mile`."""
+  miles(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MileCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: MileFilter
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `Mile`."""
+    orderBy: [MilesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MilesConnection!
   updatedAt: Datetime
 }
 
@@ -484,6 +884,12 @@ input UserFilter {
 
   """Filter by the object’s `lastName` field."""
   lastName: StringFilter
+
+  """Filter by the object’s `miles` relation."""
+  miles: UserToManyMileFilter
+
+  """Some related `miles` exist."""
+  milesExist: Boolean
 
   """Negates the expression."""
   not: UserFilter
@@ -562,6 +968,26 @@ enum UsersOrderBy {
   PRIMARY_KEY_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
+}
+
+"""
+A filter to be used against many `Mile` object types. All fields are combined with a logical ‘and.’
+"""
+input UserToManyMileFilter {
+  """
+  Every related `Mile` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: MileFilter
+
+  """
+  No related `Mile` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: MileFilter
+
+  """
+  Some related `Mile` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: MileFilter
 }
 
 """

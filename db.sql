@@ -49,8 +49,8 @@ comment on column public.user.is_admin is 'A boolean for admin status';
 -- The user account details, contained in a privately scoped schema
 create table trakrite_private.user_account (
   user_id        uuid primary key references public.user(id) on delete cascade,
-  email            text not null unique check (email ~* '^.+@.+\..+$'),
-  password_hash    text not null
+  email          text not null unique check (email ~* '^.+@.+\..+$'),
+  password_hash  text not null
 );
 
 -- Private account comments
@@ -172,3 +172,24 @@ create policy update_user on public.user for update to trakrite_user
 -- Not sure i want these yet
 create policy delete_user on public.user for delete to trakrite_user
   using (id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid);
+
+-- Create our mile table
+create table public.mile (
+  id           uuid primary key default uuid_generate_v1mc(),
+  user_id      uuid references public.user(id) on delete cascade,
+  info         text not null,
+  distance     int not null,
+  date         timestamp not null default now(),
+  created_at   timestamp default now(),
+  updated_at   timestamp default now()
+);
+
+-- Set the 'updated_at' column every time we modify our mile table
+create trigger mile_updated_at before update
+  on public.mile
+  for each row
+  execute procedure trakrite_private.set_updated_at();
+
+-- Mileage table permissions
+grant select on table public.mile to trakrite_anonymous, trakrite_user;
+grant insert, update, delete on table public.mile to trakrite_user;

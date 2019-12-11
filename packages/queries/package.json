@@ -1,0 +1,41 @@
+{
+  "name": "@trakrite/queries",
+  "description": "Generated GraphQL code for the trackrite project.",
+  "version": "1.0.0",
+  "author": "zackkrida",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "build": "graphql-codegen --config codegen.yml && tsc -b .",
+    "dev": "nodemon -e gql --watch src/queries --exec 'yarn run build'"
+  },
+  "dependencies": {
+    "apollo-client": "^2.6.4",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "react-apollo": "^3.1.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^1.9.1",
+    "@graphql-codegen/introspection": "1.9.1",
+    "@graphql-codegen/typescript": "1.9.1",
+    "@graphql-codegen/typescript-operations": "1.9.1",
+    "@graphql-codegen/typescript-react-apollo": "1.9.1",
+    "nodemon": "^2.0.2",
+    "typescript": "^3.7.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "@types/react": "^16.8.0"
+  },
+  "volta": {
+    "node": "10.17.0",
+    "yarn": "1.21.1"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "target": "ES5",
+    "strict": true,
+    "outDir": "dist",
+    "module": "commonjs",
+    "rootDir": "src",
+    "jsx": "react",
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["node_modules", "dist"],
+  "files": ["src/index.tsx"]
+}

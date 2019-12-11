@@ -1,0 +1,64 @@
+fragment MileInfo on Mile {
+  createdAt
+  date
+  distance
+  id
+  info
+  updatedAt
+  userId
+}
+
+fragment UserMiles on User {
+  miles {
+    nodes {
+      ...MileInfo
+    }
+  }
+}
+
+fragment UserInfo on User {
+  id
+  firstName
+  lastName
+  jobTitle
+  fullName
+  isAdmin
+}
+
+mutation RegisterUser($user: RegisterUserInput!) {
+  registerUser(input: $user) {
+    user {
+      ...UserInfo
+    }
+  }
+}
+
+query CurrentUser {
+  currentUser {
+    ...UserInfo
+    ...UserMiles
+  }
+}
+
+query Users {
+  users {
+    nodes {
+      ...UserInfo
+    }
+  }
+}
+
+# Sign in mutation
+mutation signIn($email: String!, $password: String!) {
+  authenticate(input: { email: $email, password: $password }) {
+    jwtToken
+  }
+}
+
+mutation addMile($mile: MileInput!) {
+  createMile(input: { mile: $mile }) {
+    mile {
+      ...MileInfo
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# Configuration file for GraphQL Codegen
+overwrite: true
+schema: ../../schema.gql
+documents: ./src/queries/*.gql
+generates:
+  ./src/index.tsx:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
+    config:
+      nonOptionalTypename: true
+      withHOC: false
+      withHooks: true

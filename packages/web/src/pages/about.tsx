@@ -1,5 +1,6 @@
 import { Page } from '../components/Page'
+import { withApollo } from '../lib/apollo'
 
 const About = () => <Page>This is the about page</Page>
 
-export default About
+export default withApollo(About)
