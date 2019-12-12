@@ -62,3 +62,11 @@ mutation addMile($mile: MileInput!) {
     }
   }
 }
+
+mutation deleteMile($id: UUID!) {
+  deleteMile(input: { id: $id }) {
+    mile {
+      ...MileInfo
+    }
+  }
+}

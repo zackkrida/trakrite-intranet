@@ -3,6 +3,7 @@ import {
   UserInfoFragment,
   UserMilesFragment,
   useAddMileMutation,
+  useDeleteMileMutation,
 } from '@trakrite/queries'
 import { CreationOptions } from '../../types'
 import { Button } from './Button'
@@ -32,6 +33,22 @@ export const UserMiles = ({
 }) => {
   const miles = user.miles.nodes
   const [addingMiles, setAddingMiles] = useState<CreationOptions>('INACTIVE')
+  const [deleteMile] = useDeleteMileMutation()
+
+  const handleDelete = async (id: number) => {
+    try {
+      const { data, errors } = await deleteMile({
+        variables: { id },
+        refetchQueries: ['CurrentUser'],
+      })
+
+      if (!errors) {
+        console.log(data)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <>
@@ -61,7 +78,43 @@ export const UserMiles = ({
                   {date(mile.date)}
                 </span>{' '}
                 {mile.info}{' '}
-                <span style={{ marginLeft: 'auto' }}>{mile.distance}mi</span>
+                <span style={{ marginLeft: 'auto' }}>
+                  {mile.distance}mi
+                  <button
+                    className="delete"
+                    onClick={() => handleDelete(mile.id)}
+                  >
+                    <span>+</span>
+                    <style jsx>{`
+                      .delete {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        background-color: transparent;
+                        border: 1px solid #fff;
+                        margin-left: 6px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        padding: 4px;
+                        line-height: 1;
+                        display: inline-block;
+                        border-radius: 4px;
+                      }
+
+                      .delete > span {
+                        display: block;
+                        transform: rotate(45deg);
+                        transform-origin: center;
+                      }
+
+                      .delete:hover,
+                      .delete:focus {
+                        border: 1px solid #e3e3e3;
+                        outline: 0;
+                      }
+                    `}</style>
+                  </button>
+                </span>
               </li>
             ))}
           </ul>
@@ -115,6 +168,7 @@ const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
             date: formatISO(new Date(date)) + '.000',
           },
         },
+        refetchQueries: ['CurrentUser'],
       })
 
       if (mile && !errors) {

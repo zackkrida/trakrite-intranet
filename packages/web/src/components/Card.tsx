@@ -3,6 +3,7 @@ export const Card = ({ children }: { children: React.ReactNode }) => (
     {children}
     <style jsx>{`
       .card {
+        min-width: 400px;
         box-sizing: border-box;
         margin: 0;
         padding: 0;

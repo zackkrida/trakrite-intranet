@@ -902,6 +902,22 @@ export type AddMileMutation = (
   )> }
 );
 
+export type DeleteMileMutationVariables = {
+  id: Scalars['UUID']
+};
+
+
+export type DeleteMileMutation = (
+  { __typename: 'Mutation' }
+  & { deleteMile: Maybe<(
+    { __typename: 'DeleteMilePayload' }
+    & { mile: Maybe<(
+      { __typename: 'Mile' }
+      & MileInfoFragment
+    )> }
+  )> }
+);
+
 export const MileInfoFragmentDoc = gql`
     fragment MileInfo on Mile {
   createdAt
@@ -1131,3 +1147,43 @@ export function useAddMileMutation(baseOptions?: ApolloReactHooks.MutationHookOp
 export type AddMileMutationHookResult = ReturnType<typeof useAddMileMutation>;
 export type AddMileMutationResult = ApolloReactCommon.MutationResult<AddMileMutation>;
 export type AddMileMutationOptions = ApolloReactCommon.BaseMutationOptions<AddMileMutation, AddMileMutationVariables>;
+export const DeleteMileDocument = gql`
+    mutation deleteMile($id: UUID!) {
+  deleteMile(input: {id: $id}) {
+    mile {
+      ...MileInfo
+    }
+  }
+}
+    ${MileInfoFragmentDoc}`;
+export type DeleteMileMutationFn = ApolloReactCommon.MutationFunction<DeleteMileMutation, DeleteMileMutationVariables>;
+export type DeleteMileComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteMileMutation, DeleteMileMutationVariables>, 'mutation'>;
+
+    export const DeleteMileComponent = (props: DeleteMileComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteMileMutation, DeleteMileMutationVariables> mutation={DeleteMileDocument} {...props} />
+    );
+    
+
+/**
+ * __useDeleteMileMutation__
+ *
+ * To run a mutation, you first call `useDeleteMileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMileMutation, { data, loading, error }] = useDeleteMileMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteMileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteMileMutation, DeleteMileMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteMileMutation, DeleteMileMutationVariables>(DeleteMileDocument, baseOptions);
+      }
+export type DeleteMileMutationHookResult = ReturnType<typeof useDeleteMileMutation>;
+export type DeleteMileMutationResult = ApolloReactCommon.MutationResult<DeleteMileMutation>;
+export type DeleteMileMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMileMutation, DeleteMileMutationVariables>;
