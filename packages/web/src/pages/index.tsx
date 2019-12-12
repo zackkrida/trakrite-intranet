@@ -3,11 +3,16 @@ import { withApollo } from '../lib/apollo'
 import { Card } from '../components/Card'
 import { SignInBox } from '../components/SignInBox'
 import { UserList } from '../components/UserList'
-import { UserInfoFragment, UserMilesFragment } from '@trakrite/queries'
+import {
+  UserInfoFragment,
+  UserMilesFragment,
+  UserJobsFragment,
+} from '@trakrite/queries'
 import { Row } from '../components/Row'
 import { Stack } from '../components/Stack'
 import { UserMiles } from '../components/UserMiles'
 import { UserJobs } from '../components/UserJobs'
+import { OpenJobs } from '../components/OpenJobs'
 import Link from 'next/link'
 
 const Home = () => (
@@ -34,16 +39,23 @@ const Home = () => (
   </Page>
 )
 
-const UserView = ({ user }: { user: UserInfoFragment & UserMilesFragment }) => (
+const UserView = ({
+  user,
+}: {
+  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
+}) => (
   <Row expandItems={true}>
     <Card>
-      <Stack space="medium">
+      <Stack space="small">
         <h1>Trakrite Intranet</h1>
-        <p>Welcome {user.fullName}</p>
+        <p>Welcome {user.fullName}!</p>
       </Stack>
     </Card>
     <Card>
-      <h1>Open Jobs</h1>
+      <Stack space="small">
+        <h1>Open Jobs</h1>
+        <OpenJobs user={user} limit={5} />
+      </Stack>
     </Card>
     <Card>
       <Stack space="small">
@@ -67,7 +79,7 @@ const UserView = ({ user }: { user: UserInfoFragment & UserMilesFragment }) => (
 const AdminView = ({
   user,
 }: {
-  user: UserInfoFragment & UserMilesFragment
+  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
 }) => (
   <Row expandItems={true}>
     <Card>

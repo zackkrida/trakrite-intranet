@@ -13,6 +13,7 @@ import { Stack } from './Stack'
 import format from 'date-fns/format'
 import formatISO from 'date-fns/formatISO'
 import Link from 'next/link'
+import { DeleteButton } from './DeleteButton'
 
 const date = (str: string) => {
   const date = new Date(str)
@@ -26,7 +27,7 @@ const date = (str: string) => {
 
 export const UserMiles = ({
   user,
-  limit = -1,
+  limit = undefined,
 }: {
   user: UserInfoFragment & UserMilesFragment
   limit?: number
@@ -60,9 +61,9 @@ export const UserMiles = ({
                 key={mile.id}
                 style={{
                   display: 'flex',
-                  alignItems: 'center',
+                  alignItems: 'baseline',
                   padding: '4px 12px',
-                  margin: '0 -16px',
+                  margin: '0 -12px',
                   borderBottom: '1px solid #e3e3e3',
                 }}
               >
@@ -80,40 +81,10 @@ export const UserMiles = ({
                 {mile.info}{' '}
                 <span style={{ marginLeft: 'auto' }}>
                   {mile.distance}mi
-                  <button
+                  <DeleteButton
                     className="delete"
                     onClick={() => handleDelete(mile.id)}
-                  >
-                    <span>+</span>
-                    <style jsx>{`
-                      .delete {
-                        -webkit-appearance: none;
-                        -moz-appearance: none;
-                        appearance: none;
-                        background-color: transparent;
-                        border: 1px solid #fff;
-                        margin-left: 6px;
-                        font-size: 16px;
-                        cursor: pointer;
-                        padding: 4px;
-                        line-height: 1;
-                        display: inline-block;
-                        border-radius: 4px;
-                      }
-
-                      .delete > span {
-                        display: block;
-                        transform: rotate(45deg);
-                        transform-origin: center;
-                      }
-
-                      .delete:hover,
-                      .delete:focus {
-                        border: 1px solid #e3e3e3;
-                        outline: 0;
-                      }
-                    `}</style>
-                  </button>
+                  />
                 </span>
               </li>
             ))}

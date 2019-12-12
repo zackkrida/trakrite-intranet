@@ -1,4 +1,8 @@
-import { UserInfoFragment, UserJobsFragment } from '@trakrite/queries'
+import {
+  UserInfoFragment,
+  UserJobsFragment,
+  useOpenJobsQuery,
+} from '@trakrite/queries'
 import format from 'date-fns/format'
 import Link from 'next/link'
 
@@ -12,18 +16,19 @@ const date = (str: string) => {
   }
 }
 
-export const UserJobs = ({
+export const OpenJobs = ({
   user,
   limit = undefined,
 }: {
   user: UserInfoFragment & UserJobsFragment
   limit?: number
 }) => {
-  const jobs = user.jobs.nodes
+  const { data, loading } = useOpenJobsQuery()
+  const jobs = data?.jobs?.nodes ?? []
 
   return (
     <>
-      {jobs.length > 0 ? (
+      {!loading && jobs.length > 0 ? (
         <>
           <ul>
             {jobs.slice(0, limit).map(job => (
@@ -59,8 +64,8 @@ export const UserJobs = ({
           {limit > -1 && (
             <p style={{ lineHeight: 1 }}>
               <small>
-                Showing up to {limit} most recently added trips.{' '}
-                <Link href="/jobs">
+                Showing up to {limit} most recently added jobs.{' '}
+                <Link href="/open-jobs">
                   <a style={{ display: 'inline' }}>Click to view all.</a>
                 </Link>
               </small>
@@ -69,7 +74,7 @@ export const UserJobs = ({
         </>
       ) : (
         <>
-          <p>No jobs logged yet.</p>
+          <p>No open jobs.</p>
         </>
       )}
     </>

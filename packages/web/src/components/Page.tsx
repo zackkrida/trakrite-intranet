@@ -6,6 +6,7 @@ import {
   useCurrentUserQuery,
   UserInfoFragment,
   UserMilesFragment,
+  UserJobsFragment,
 } from '@trakrite/queries'
 import { useApolloClient } from '@apollo/react-hooks'
 
@@ -172,4 +173,7 @@ interface LayoutProps {
   children: React.ReactNode | CurrentUserRenderProp
 }
 
-type CurrentUserType = (UserInfoFragment & UserMilesFragment) | null | undefined
+type CurrentUserType =
+  | (UserInfoFragment & UserMilesFragment & UserJobsFragment)
+  | null
+  | undefined

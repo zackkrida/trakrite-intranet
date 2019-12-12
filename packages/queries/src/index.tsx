@@ -1314,6 +1314,20 @@ export type DeleteJobMutation = (
   )> }
 );
 
+export type OpenJobsQueryVariables = {};
+
+
+export type OpenJobsQuery = (
+  { __typename: 'Query' }
+  & { jobs: Maybe<(
+    { __typename: 'JobsConnection' }
+    & { nodes: Array<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
 export const MileInfoFragmentDoc = gql`
     fragment MileInfo on Mile {
   createdAt
@@ -1685,3 +1699,43 @@ export function useDeleteJobMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type DeleteJobMutationHookResult = ReturnType<typeof useDeleteJobMutation>;
 export type DeleteJobMutationResult = ApolloReactCommon.MutationResult<DeleteJobMutation>;
 export type DeleteJobMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteJobMutation, DeleteJobMutationVariables>;
+export const OpenJobsDocument = gql`
+    query OpenJobs {
+  jobs(filter: {userId: {isNull: true}}) {
+    nodes {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type OpenJobsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<OpenJobsQuery, OpenJobsQueryVariables>, 'query'>;
+
+    export const OpenJobsComponent = (props: OpenJobsComponentProps) => (
+      <ApolloReactComponents.Query<OpenJobsQuery, OpenJobsQueryVariables> query={OpenJobsDocument} {...props} />
+    );
+    
+
+/**
+ * __useOpenJobsQuery__
+ *
+ * To run a query within a React component, call `useOpenJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOpenJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOpenJobsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useOpenJobsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<OpenJobsQuery, OpenJobsQueryVariables>) {
+        return ApolloReactHooks.useQuery<OpenJobsQuery, OpenJobsQueryVariables>(OpenJobsDocument, baseOptions);
+      }
+export function useOpenJobsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<OpenJobsQuery, OpenJobsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<OpenJobsQuery, OpenJobsQueryVariables>(OpenJobsDocument, baseOptions);
+        }
+export type OpenJobsQueryHookResult = ReturnType<typeof useOpenJobsQuery>;
+export type OpenJobsLazyQueryHookResult = ReturnType<typeof useOpenJobsLazyQuery>;
+export type OpenJobsQueryResult = ApolloReactCommon.QueryResult<OpenJobsQuery, OpenJobsQueryVariables>;

@@ -105,3 +105,11 @@ mutation deleteJob($id: UUID!) {
     }
   }
 }
+
+query OpenJobs {
+  jobs(filter: { userId: { isNull: true } }) {
+    nodes {
+      ...JobInfo
+    }
+  }
+}
