@@ -78,6 +78,41 @@ export type BooleanFilter = {
   notIn?: Maybe<Array<Scalars['Boolean']>>,
 };
 
+/** All input for the create `Job` mutation. */
+export type CreateJobInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Job` to be created by this mutation. */
+  job: JobInput,
+};
+
+/** The output of our create `Job` mutation. */
+export type CreateJobPayload = {
+   __typename: 'CreateJobPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Job` that was created by this mutation. */
+  job?: Maybe<Job>,
+  /** An edge for our `Job`. May be used by Relay 1. */
+  jobEdge?: Maybe<JobsEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Job`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our create `Job` mutation. */
+export type CreateJobPayloadJobEdgeArgs = {
+  orderBy?: Maybe<Array<JobsOrderBy>>
+};
+
 /** All input for the create `Mile` mutation. */
 export type CreateMileInput = {
   /** 
@@ -141,6 +176,41 @@ export type DatetimeFilter = {
   notIn?: Maybe<Array<Scalars['Datetime']>>,
 };
 
+/** All input for the `deleteJob` mutation. */
+export type DeleteJobInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  id: Scalars['UUID'],
+};
+
+/** The output of our delete `Job` mutation. */
+export type DeleteJobPayload = {
+   __typename: 'DeleteJobPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  deletedJobNodeId?: Maybe<Scalars['ID']>,
+  /** The `Job` that was deleted by this mutation. */
+  job?: Maybe<Job>,
+  /** An edge for our `Job`. May be used by Relay 1. */
+  jobEdge?: Maybe<JobsEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Job`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our delete `Job` mutation. */
+export type DeleteJobPayloadJobEdgeArgs = {
+  orderBy?: Maybe<Array<JobsOrderBy>>
+};
+
 /** All input for the `deleteMile` mutation. */
 export type DeleteMileInput = {
   /** 
@@ -201,6 +271,139 @@ export type IntFilter = {
   /** Not included in the specified list. */
   notIn?: Maybe<Array<Scalars['Int']>>,
 };
+
+export type Job = {
+   __typename: 'Job',
+  createdAt?: Maybe<Scalars['Datetime']>,
+  id: Scalars['UUID'],
+  notes?: Maybe<Scalars['String']>,
+  paymentStatus: PayStatus,
+  progress?: Maybe<Scalars['String']>,
+  recievedOn: Scalars['Datetime'],
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  /** Reads a single `User` that is related to this `Job`. */
+  user?: Maybe<User>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A condition to be used against `Job` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type JobCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<Scalars['UUID']>,
+  /** Checks for equality with the object’s `notes` field. */
+  notes?: Maybe<Scalars['String']>,
+  /** Checks for equality with the object’s `paymentStatus` field. */
+  paymentStatus?: Maybe<PayStatus>,
+  /** Checks for equality with the object’s `progress` field. */
+  progress?: Maybe<Scalars['String']>,
+  /** Checks for equality with the object’s `recievedOn` field. */
+  recievedOn?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A filter to be used against `Job` object types. All fields are combined with a logical ‘and.’ */
+export type JobFilter = {
+  /** Checks for all expressions in this list. */
+  and?: Maybe<Array<JobFilter>>,
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<UuidFilter>,
+  /** Negates the expression. */
+  not?: Maybe<JobFilter>,
+  /** Filter by the object’s `notes` field. */
+  notes?: Maybe<StringFilter>,
+  /** Checks for any expressions in this list. */
+  or?: Maybe<Array<JobFilter>>,
+  /** Filter by the object’s `paymentStatus` field. */
+  paymentStatus?: Maybe<PayStatusFilter>,
+  /** Filter by the object’s `progress` field. */
+  progress?: Maybe<StringFilter>,
+  /** Filter by the object’s `recievedOn` field. */
+  recievedOn?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `user` relation. */
+  user?: Maybe<UserFilter>,
+  /** A related `user` exists. */
+  userExists?: Maybe<Scalars['Boolean']>,
+  /** Filter by the object’s `userId` field. */
+  userId?: Maybe<UuidFilter>,
+};
+
+/** An input for mutations affecting `Job` */
+export type JobInput = {
+  createdAt?: Maybe<Scalars['Datetime']>,
+  id?: Maybe<Scalars['UUID']>,
+  notes?: Maybe<Scalars['String']>,
+  paymentStatus?: Maybe<PayStatus>,
+  progress?: Maybe<Scalars['String']>,
+  recievedOn?: Maybe<Scalars['Datetime']>,
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** Represents an update to a `Job`. Fields that are set will be updated. */
+export type JobPatch = {
+  createdAt?: Maybe<Scalars['Datetime']>,
+  id?: Maybe<Scalars['UUID']>,
+  notes?: Maybe<Scalars['String']>,
+  paymentStatus?: Maybe<PayStatus>,
+  progress?: Maybe<Scalars['String']>,
+  recievedOn?: Maybe<Scalars['Datetime']>,
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A connection to a list of `Job` values. */
+export type JobsConnection = {
+   __typename: 'JobsConnection',
+  /** A list of edges which contains the `Job` and cursor to aid in pagination. */
+  edges: Array<JobsEdge>,
+  /** A list of `Job` objects. */
+  nodes: Array<Job>,
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo,
+  /** The count of *all* `Job` you could get from the connection. */
+  totalCount: Scalars['Int'],
+};
+
+/** A `Job` edge in the connection. */
+export type JobsEdge = {
+   __typename: 'JobsEdge',
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>,
+  /** The `Job` at the end of the edge. */
+  node: Job,
+};
+
+/** Methods to use when ordering `Job`. */
+export enum JobsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  NotesAsc = 'NOTES_ASC',
+  NotesDesc = 'NOTES_DESC',
+  PaymentStatusAsc = 'PAYMENT_STATUS_ASC',
+  PaymentStatusDesc = 'PAYMENT_STATUS_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ProgressAsc = 'PROGRESS_ASC',
+  ProgressDesc = 'PROGRESS_DESC',
+  RecievedOnAsc = 'RECIEVED_ON_ASC',
+  RecievedOnDesc = 'RECIEVED_ON_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 
 export type Mile = {
@@ -332,12 +535,18 @@ export type Mutation = {
    __typename: 'Mutation',
   /** Creates a JWT token that will securely identify a user and give them certain permissions. */
   authenticate?: Maybe<AuthenticatePayload>,
+  /** Creates a single `Job`. */
+  createJob?: Maybe<CreateJobPayload>,
   /** Creates a single `Mile`. */
   createMile?: Maybe<CreateMilePayload>,
+  /** Deletes a single `Job` using a unique key. */
+  deleteJob?: Maybe<DeleteJobPayload>,
   /** Deletes a single `Mile` using a unique key. */
   deleteMile?: Maybe<DeleteMilePayload>,
   /** Registers a single user and creates an account in our app. */
   registerUser?: Maybe<RegisterUserPayload>,
+  /** Updates a single `Job` using a unique key and a patch. */
+  updateJob?: Maybe<UpdateJobPayload>,
   /** Updates a single `Mile` using a unique key and a patch. */
   updateMile?: Maybe<UpdateMilePayload>,
   /** Updates a single `User` using a unique key and a patch. */
@@ -352,8 +561,20 @@ export type MutationAuthenticateArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateJobArgs = {
+  input: CreateJobInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateMileArgs = {
   input: CreateMileInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobArgs = {
+  input: DeleteJobInput
 };
 
 
@@ -366,6 +587,12 @@ export type MutationDeleteMileArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationRegisterUserArgs = {
   input: RegisterUserInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobArgs = {
+  input: UpdateJobInput
 };
 
 
@@ -393,11 +620,48 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['Cursor']>,
 };
 
+export enum PayStatus {
+  Cancelled = 'CANCELLED',
+  Invoiced = 'INVOICED',
+  Paid = 'PAID',
+  Pending = 'PENDING',
+  Waiting = 'WAITING'
+}
+
+/** A filter to be used against PayStatus fields. All fields are combined with a logical ‘and.’ */
+export type PayStatusFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: Maybe<PayStatus>,
+  /** Equal to the specified value. */
+  equalTo?: Maybe<PayStatus>,
+  /** Greater than the specified value. */
+  greaterThan?: Maybe<PayStatus>,
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: Maybe<PayStatus>,
+  /** Included in the specified list. */
+  in?: Maybe<Array<PayStatus>>,
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: Maybe<Scalars['Boolean']>,
+  /** Less than the specified value. */
+  lessThan?: Maybe<PayStatus>,
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: Maybe<PayStatus>,
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: Maybe<PayStatus>,
+  /** Not equal to the specified value. */
+  notEqualTo?: Maybe<PayStatus>,
+  /** Not included in the specified list. */
+  notIn?: Maybe<Array<PayStatus>>,
+};
+
 /** The root query type which gives access points into the data universe. */
 export type Query = {
    __typename: 'Query',
   /** Gets the user who was identified by our JWT. */
   currentUser?: Maybe<User>,
+  job?: Maybe<Job>,
+  /** Reads and enables pagination through a set of `Job`. */
+  jobs?: Maybe<JobsConnection>,
   mile?: Maybe<Mile>,
   /** Reads and enables pagination through a set of `Mile`. */
   miles?: Maybe<MilesConnection>,
@@ -409,6 +673,25 @@ export type Query = {
   user?: Maybe<User>,
   /** Reads and enables pagination through a set of `User`. */
   users?: Maybe<UsersConnection>,
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobArgs = {
+  id: Scalars['UUID']
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobsArgs = {
+  after?: Maybe<Scalars['Cursor']>,
+  before?: Maybe<Scalars['Cursor']>,
+  condition?: Maybe<JobCondition>,
+  filter?: Maybe<JobFilter>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<Array<JobsOrderBy>>
 };
 
 
@@ -560,6 +843,42 @@ export type StringFilter = {
   startsWithInsensitive?: Maybe<Scalars['String']>,
 };
 
+/** All input for the `updateJob` mutation. */
+export type UpdateJobInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  id: Scalars['UUID'],
+  /** An object where the defined keys will be set on the `Job` being updated. */
+  patch: JobPatch,
+};
+
+/** The output of our update `Job` mutation. */
+export type UpdateJobPayload = {
+   __typename: 'UpdateJobPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Job` that was updated by this mutation. */
+  job?: Maybe<Job>,
+  /** An edge for our `Job`. May be used by Relay 1. */
+  jobEdge?: Maybe<JobsEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Job`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our update `Job` mutation. */
+export type UpdateJobPayloadJobEdgeArgs = {
+  orderBy?: Maybe<Array<JobsOrderBy>>
+};
+
 /** All input for the `updateMile` mutation. */
 export type UpdateMileInput = {
   /** 
@@ -643,6 +962,8 @@ export type User = {
   id: Scalars['UUID'],
   /** A boolean for admin status */
   isAdmin?: Maybe<Scalars['Boolean']>,
+  /** Reads and enables pagination through a set of `Job`. */
+  jobs: JobsConnection,
   /** A short description about the user. */
   jobTitle?: Maybe<Scalars['String']>,
   /** The users last name. */
@@ -650,6 +971,18 @@ export type User = {
   /** Reads and enables pagination through a set of `Mile`. */
   miles: MilesConnection,
   updatedAt?: Maybe<Scalars['Datetime']>,
+};
+
+
+export type UserJobsArgs = {
+  after?: Maybe<Scalars['Cursor']>,
+  before?: Maybe<Scalars['Cursor']>,
+  condition?: Maybe<JobCondition>,
+  filter?: Maybe<JobFilter>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<Array<JobsOrderBy>>
 };
 
 
@@ -696,6 +1029,10 @@ export type UserFilter = {
   id?: Maybe<UuidFilter>,
   /** Filter by the object’s `isAdmin` field. */
   isAdmin?: Maybe<BooleanFilter>,
+  /** Filter by the object’s `jobs` relation. */
+  jobs?: Maybe<UserToManyJobFilter>,
+  /** Some related `jobs` exist. */
+  jobsExist?: Maybe<Scalars['Boolean']>,
   /** Filter by the object’s `jobTitle` field. */
   jobTitle?: Maybe<StringFilter>,
   /** Filter by the object’s `lastName` field. */
@@ -772,6 +1109,16 @@ export enum UsersOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+/** A filter to be used against many `Job` object types. All fields are combined with a logical ‘and.’ */
+export type UserToManyJobFilter = {
+  /** Every related `Job` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: Maybe<JobFilter>,
+  /** No related `Job` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: Maybe<JobFilter>,
+  /** Some related `Job` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: Maybe<JobFilter>,
+};
+
 /** A filter to be used against many `Mile` object types. All fields are combined with a logical ‘and.’ */
 export type UserToManyMileFilter = {
   /** Every related `Mile` matches the filter criteria. All fields are combined with a logical ‘and.’ */
@@ -809,6 +1156,11 @@ export type UuidFilter = {
   notIn?: Maybe<Array<Scalars['UUID']>>,
 };
 
+export type JobInfoFragment = (
+  { __typename: 'Job' }
+  & Pick<Job, 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt'>
+);
+
 export type MileInfoFragment = (
   { __typename: 'Mile' }
   & Pick<Mile, 'createdAt' | 'date' | 'distance' | 'id' | 'info' | 'updatedAt' | 'userId'>
@@ -821,6 +1173,17 @@ export type UserMilesFragment = (
     & { nodes: Array<(
       { __typename: 'Mile' }
       & MileInfoFragment
+    )> }
+  ) }
+);
+
+export type UserJobsFragment = (
+  { __typename: 'User' }
+  & { jobs: (
+    { __typename: 'JobsConnection' }
+    & { nodes: Array<(
+      { __typename: 'Job' }
+      & JobInfoFragment
     )> }
   ) }
 );
@@ -855,6 +1218,7 @@ export type CurrentUserQuery = (
     { __typename: 'User' }
     & UserInfoFragment
     & UserMilesFragment
+    & UserJobsFragment
   )> }
 );
 
@@ -918,6 +1282,38 @@ export type DeleteMileMutation = (
   )> }
 );
 
+export type AddJobMutationVariables = {
+  job: JobInput
+};
+
+
+export type AddJobMutation = (
+  { __typename: 'Mutation' }
+  & { createJob: Maybe<(
+    { __typename: 'CreateJobPayload' }
+    & { job: Maybe<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
+export type DeleteJobMutationVariables = {
+  id: Scalars['UUID']
+};
+
+
+export type DeleteJobMutation = (
+  { __typename: 'Mutation' }
+  & { deleteJob: Maybe<(
+    { __typename: 'DeleteJobPayload' }
+    & { job: Maybe<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
 export const MileInfoFragmentDoc = gql`
     fragment MileInfo on Mile {
   createdAt
@@ -938,6 +1334,26 @@ export const UserMilesFragmentDoc = gql`
   }
 }
     ${MileInfoFragmentDoc}`;
+export const JobInfoFragmentDoc = gql`
+    fragment JobInfo on Job {
+  createdAt
+  id
+  notes
+  paymentStatus
+  progress
+  recievedOn
+  updatedAt
+}
+    `;
+export const UserJobsFragmentDoc = gql`
+    fragment UserJobs on User {
+  jobs {
+    nodes {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
   id
@@ -993,10 +1409,12 @@ export const CurrentUserDocument = gql`
   currentUser {
     ...UserInfo
     ...UserMiles
+    ...UserJobs
   }
 }
     ${UserInfoFragmentDoc}
-${UserMilesFragmentDoc}`;
+${UserMilesFragmentDoc}
+${UserJobsFragmentDoc}`;
 export type CurrentUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CurrentUserQuery, CurrentUserQueryVariables>, 'query'>;
 
     export const CurrentUserComponent = (props: CurrentUserComponentProps) => (
@@ -1187,3 +1605,83 @@ export function useDeleteMileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type DeleteMileMutationHookResult = ReturnType<typeof useDeleteMileMutation>;
 export type DeleteMileMutationResult = ApolloReactCommon.MutationResult<DeleteMileMutation>;
 export type DeleteMileMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMileMutation, DeleteMileMutationVariables>;
+export const AddJobDocument = gql`
+    mutation addJob($job: JobInput!) {
+  createJob(input: {job: $job}) {
+    job {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type AddJobMutationFn = ApolloReactCommon.MutationFunction<AddJobMutation, AddJobMutationVariables>;
+export type AddJobComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddJobMutation, AddJobMutationVariables>, 'mutation'>;
+
+    export const AddJobComponent = (props: AddJobComponentProps) => (
+      <ApolloReactComponents.Mutation<AddJobMutation, AddJobMutationVariables> mutation={AddJobDocument} {...props} />
+    );
+    
+
+/**
+ * __useAddJobMutation__
+ *
+ * To run a mutation, you first call `useAddJobMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddJobMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addJobMutation, { data, loading, error }] = useAddJobMutation({
+ *   variables: {
+ *      job: // value for 'job'
+ *   },
+ * });
+ */
+export function useAddJobMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddJobMutation, AddJobMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddJobMutation, AddJobMutationVariables>(AddJobDocument, baseOptions);
+      }
+export type AddJobMutationHookResult = ReturnType<typeof useAddJobMutation>;
+export type AddJobMutationResult = ApolloReactCommon.MutationResult<AddJobMutation>;
+export type AddJobMutationOptions = ApolloReactCommon.BaseMutationOptions<AddJobMutation, AddJobMutationVariables>;
+export const DeleteJobDocument = gql`
+    mutation deleteJob($id: UUID!) {
+  deleteJob(input: {id: $id}) {
+    job {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type DeleteJobMutationFn = ApolloReactCommon.MutationFunction<DeleteJobMutation, DeleteJobMutationVariables>;
+export type DeleteJobComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteJobMutation, DeleteJobMutationVariables>, 'mutation'>;
+
+    export const DeleteJobComponent = (props: DeleteJobComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteJobMutation, DeleteJobMutationVariables> mutation={DeleteJobDocument} {...props} />
+    );
+    
+
+/**
+ * __useDeleteJobMutation__
+ *
+ * To run a mutation, you first call `useDeleteJobMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteJobMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteJobMutation, { data, loading, error }] = useDeleteJobMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteJobMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteJobMutation, DeleteJobMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, baseOptions);
+      }
+export type DeleteJobMutationHookResult = ReturnType<typeof useDeleteJobMutation>;
+export type DeleteJobMutationResult = ApolloReactCommon.MutationResult<DeleteJobMutation>;
+export type DeleteJobMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteJobMutation, DeleteJobMutationVariables>;

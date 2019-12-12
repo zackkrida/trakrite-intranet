@@ -193,3 +193,29 @@ create trigger mile_updated_at before update
 -- Mileage table permissions
 grant select on table public.mile to trakrite_anonymous, trakrite_user;
 grant insert, update, delete on table public.mile to trakrite_user;
+
+
+-- Create a payment type enum
+CREATE TYPE pay_status AS ENUM ('PAID', 'CANCELLED', 'INVOICED', 'WAITING', 'PENDING');
+
+-- Create our job table
+create table public.job (
+  id              uuid primary key default uuid_generate_v1mc(),
+  user_id         uuid references public.user(id) on delete set null,
+  payment_status  pay_status not null default 'PENDING',
+  notes           text,
+  progress        text,
+  recieved_on     timestamp not null default now(),
+  created_at      timestamp default now(),
+  updated_at      timestamp default now()
+);
+
+-- Set the 'updated_at' column every time we modify our job table
+create trigger job_updated_at before update
+  on public.job
+  for each row
+  execute procedure trakrite_private.set_updated_at();
+
+-- Job table permissions
+grant select on table public.job to trakrite_anonymous, trakrite_user;
+grant insert, update, delete on table public.job to trakrite_user;

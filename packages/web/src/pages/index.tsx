@@ -5,11 +5,9 @@ import { SignInBox } from '../components/SignInBox'
 import { UserList } from '../components/UserList'
 import { UserInfoFragment, UserMilesFragment } from '@trakrite/queries'
 import { Row } from '../components/Row'
-import { Button } from '../components/Button'
 import { Stack } from '../components/Stack'
-import { Dialog } from '@reach/dialog'
-import { useState } from 'react'
 import { UserMiles } from '../components/UserMiles'
+import { UserJobs } from '../components/UserJobs'
 import Link from 'next/link'
 
 const Home = () => (
@@ -48,7 +46,10 @@ const UserView = ({ user }: { user: UserInfoFragment & UserMilesFragment }) => (
       <h1>Open Jobs</h1>
     </Card>
     <Card>
-      <h1>My Jobs</h1>
+      <Stack space="small">
+        <h1>My Jobs</h1>
+        <UserJobs user={user} limit={5} />
+      </Stack>
     </Card>
     <Card>
       <Stack space="small">
