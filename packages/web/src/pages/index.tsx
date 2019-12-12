@@ -10,10 +10,8 @@ import {
 } from '@trakrite/queries'
 import { Row } from '../components/Row'
 import { Stack } from '../components/Stack'
-import { UserMiles } from '../components/UserMiles'
-import { UserJobs } from '../components/UserJobs'
-import { OpenJobs } from '../components/OpenJobs'
-import Link from 'next/link'
+import { UserView } from '../components/UserView'
+import { AdminView } from '../components/AdminView'
 
 const Home = () => (
   <Page>
@@ -25,7 +23,13 @@ const Home = () => (
           <UserView user={currentUser} />
         )
       ) : (
-        <div style={{ width: '500px', maxWidth: '100%', margin: '0 auto' }}>
+        <div
+          style={{
+            width: '400px',
+            maxWidth: 'calc(100vw - 32px)',
+            margin: '0 auto',
+          }}
+        >
           <Card>
             <Stack space="small">
               <h1>Welcome to the Trakrite Intranet</h1>
@@ -37,61 +41,6 @@ const Home = () => (
       )
     }
   </Page>
-)
-
-const UserView = ({
-  user,
-}: {
-  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
-}) => (
-  <Row expandItems={true}>
-    <Card>
-      <Stack space="small">
-        <h1>Trakrite Intranet</h1>
-        <p>Welcome {user.fullName}!</p>
-      </Stack>
-    </Card>
-    <Card>
-      <Stack space="small">
-        <h1>Open Jobs</h1>
-        <OpenJobs user={user} limit={5} />
-      </Stack>
-    </Card>
-    <Card>
-      <Stack space="small">
-        <h1>My Jobs</h1>
-        <UserJobs user={user} limit={5} />
-      </Stack>
-    </Card>
-    <Card>
-      <Stack space="small">
-        <h1>
-          <Link href="/miles">
-            <a>My Miles</a>
-          </Link>
-        </h1>
-        <UserMiles user={user} limit={5} />
-      </Stack>
-    </Card>
-  </Row>
-)
-
-const AdminView = ({
-  user,
-}: {
-  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
-}) => (
-  <Row expandItems={true}>
-    <Card>
-      <h1>Trakrite Intranet</h1>
-      <p>Welcome {user.fullName}</p>
-    </Card>
-
-    <Card>
-      <h2>Manage Users</h2>
-      <UserList />
-    </Card>
-  </Row>
 )
 
 export default withApollo(Home)

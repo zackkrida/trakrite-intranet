@@ -9,6 +9,7 @@ import { Stack } from './Stack'
 import { Input } from './Input'
 import { Button } from './Button'
 
+// Create or edit an existing job.
 export const AddJobForm = ({ userId }: UserInfoFragment['id']) => {
   const [addJob] = useAddJobMutation()
   const [paymentStatus, setPaymentStatus] = useState<PayStatus>(

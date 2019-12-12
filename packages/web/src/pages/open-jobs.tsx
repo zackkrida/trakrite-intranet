@@ -1,20 +1,20 @@
 import { Page } from '../components/Page'
-import { UserMiles } from '../components/UserMiles'
+import { OpenJobs } from '../components/OpenJobs'
 import { Card } from '../components/Card'
 import { Stack } from '../components/Stack'
 import { withApollo } from '../lib/apollo'
 
-const Miles = () => (
+const Jobs = () => (
   <Page>
     {({ currentUser }) => (
       <Card>
         <Stack space="small">
-          <h1>My Miles</h1>
-          {currentUser ? <UserMiles user={currentUser} /> : <p>Uh oh.</p>}
+          <h1>Open Jobs</h1>
+          <OpenJobs user={currentUser} />
         </Stack>
       </Card>
     )}
   </Page>
 )
 
-export default withApollo(Miles)
+export default withApollo(Jobs)

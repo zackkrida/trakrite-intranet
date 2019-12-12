@@ -1,9 +1,11 @@
-import { useState, FormEventHandler } from 'react'
+import { useState } from 'react'
 import {
   UserInfoFragment,
   UserMilesFragment,
   useAddMileMutation,
   useDeleteMileMutation,
+  useEditMileMutation,
+  MileInfoFragment,
 } from '@trakrite/queries'
 import { CreationOptions } from '../../types'
 import { Button } from './Button'
@@ -13,7 +15,8 @@ import { Stack } from './Stack'
 import format from 'date-fns/format'
 import formatISO from 'date-fns/formatISO'
 import Link from 'next/link'
-import { DeleteButton } from './DeleteButton'
+import { TinyButton } from './TinyButton'
+import toast from 'toasted-notes'
 
 const date = (str: string) => {
   const date = new Date(str)
@@ -34,6 +37,9 @@ export const UserMiles = ({
 }) => {
   const miles = user.miles.nodes
   const [addingMiles, setAddingMiles] = useState<CreationOptions>('INACTIVE')
+  const [editingMiles, setEditingMiles] = useState<null | MileInfoFragment>(
+    null
+  )
   const [deleteMile] = useDeleteMileMutation()
 
   const handleDelete = async (id: number) => {
@@ -45,6 +51,7 @@ export const UserMiles = ({
 
       if (!errors) {
         console.log(data)
+        toast.notify('Miles deleted.')
       }
     } catch (error) {
       console.error(error)
@@ -69,7 +76,6 @@ export const UserMiles = ({
               >
                 <span
                   style={{
-                    fontFamily: 'monospaced, monospace, sans-serif',
                     fontSize: '11px',
                     fontWeight: 'bold',
                     letterSpacing: '-.25px',
@@ -81,10 +87,12 @@ export const UserMiles = ({
                 {mile.info}{' '}
                 <span style={{ marginLeft: 'auto' }}>
                   {mile.distance}mi
-                  <DeleteButton
-                    className="delete"
-                    onClick={() => handleDelete(mile.id)}
-                  />
+                  <TinyButton onClick={() => setEditingMiles(mile)}>
+                    Edit
+                  </TinyButton>
+                  <TinyButton onClick={() => handleDelete(mile.id)}>
+                    Delete
+                  </TinyButton>
                 </span>
               </li>
             ))}
@@ -110,19 +118,37 @@ export const UserMiles = ({
         isOpen={addingMiles === 'ACTIVE'}
         onDismiss={() => setAddingMiles('INACTIVE')}
       >
-        <AddMileForm userId={user.id} />
+        <MileForm userId={user.id} />
+      </Dialog>
+
+      <Dialog
+        isOpen={editingMiles != null}
+        onDismiss={() => setEditingMiles(null)}
+      >
+        <MileForm userId={user.id} mile={editingMiles} />
       </Dialog>
     </>
   )
 }
 
-const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
+const MileForm = ({
+  userId,
+  mile,
+}: {
+  userId: UserInfoFragment['id']
+  mile?: MileInfoFragment
+}) => {
   const [addMile] = useAddMileMutation()
-  const [distance, setDistance] = useState(0)
-  const [info, setInfo] = useState('')
-  const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'))
+  const [editMile] = useEditMileMutation()
 
-  const handleSubmit: FormEventHandler = async event => {
+  // Form fields
+  const [distance, setDistance] = useState(mile ? mile.distance : 0)
+  const [info, setInfo] = useState(mile ? mile.info : '')
+  const [date, setDate] = useState(
+    format(mile ? new Date(mile.date) : new Date(), 'yyyy-MM-dd')
+  )
+
+  const handleCreate = async () => {
     event.preventDefault()
     try {
       const {
@@ -143,7 +169,7 @@ const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
       })
 
       if (mile && !errors) {
-        alert('success!')
+        toast.notify('Miles added.')
         setDistance(0)
         setInfo('')
         setDate(format(new Date(), 'yyyy-MM-dd'))
@@ -153,10 +179,43 @@ const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
     }
   }
 
+  const handleEdit = async () => {
+    event.preventDefault()
+    try {
+      const {
+        data: { updateMile },
+        errors,
+      } = await editMile({
+        variables: {
+          id: mile.id,
+          patch: {
+            userId,
+            distance,
+            info,
+            date: formatISO(new Date(date)) + '.000',
+          },
+        },
+        refetchQueries: ['CurrentUser'],
+      })
+
+      if (updateMile.mile && !errors) {
+        toast.notify('Miles edited.')
+      }
+    } catch (error) {
+      console.error(error.message)
+    }
+  }
+
   return (
-    <form action="" onSubmit={handleSubmit}>
+    <form
+      action=""
+      onSubmit={event => {
+        event.preventDefault()
+        mile ? handleEdit() : handleCreate()
+      }}
+    >
       <Stack space="small">
-        <h1>Add miles</h1>
+        <h1>{mile ? 'Edit' : 'Add'} miles</h1>
 
         <Input
           label="Distance (Round to the nearest mile)"
@@ -167,6 +226,7 @@ const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
         <Input
           type="text"
           label="Description/Purpose of Trip"
+          placeholder="Refueled company vans, met with client x, etc."
           name="info"
           value={info}
           onChange={event => setInfo(event.currentTarget.value)}
@@ -179,7 +239,7 @@ const AddMileForm = ({ userId }: UserInfoFragment['id']) => {
           type="date"
         />
         <Button type="submit" theme="PRIMARY">
-          Add miles
+          {mile ? 'Update' : 'Add'} miles
         </Button>
       </Stack>
     </form>

@@ -275,7 +275,9 @@ export type IntFilter = {
 export type Job = {
    __typename: 'Job',
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerName?: Maybe<Scalars['String']>,
   id: Scalars['UUID'],
+  name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus: PayStatus,
   progress?: Maybe<Scalars['String']>,
@@ -290,8 +292,12 @@ export type Job = {
 export type JobCondition = {
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `customerName` field. */
+  customerName?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `id` field. */
   id?: Maybe<Scalars['UUID']>,
+  /** Checks for equality with the object’s `name` field. */
+  name?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `notes` field. */
   notes?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `paymentStatus` field. */
@@ -312,8 +318,12 @@ export type JobFilter = {
   and?: Maybe<Array<JobFilter>>,
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `customerName` field. */
+  customerName?: Maybe<StringFilter>,
   /** Filter by the object’s `id` field. */
   id?: Maybe<UuidFilter>,
+  /** Filter by the object’s `name` field. */
+  name?: Maybe<StringFilter>,
   /** Negates the expression. */
   not?: Maybe<JobFilter>,
   /** Filter by the object’s `notes` field. */
@@ -339,7 +349,9 @@ export type JobFilter = {
 /** An input for mutations affecting `Job` */
 export type JobInput = {
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerName?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['UUID']>,
+  name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus?: Maybe<PayStatus>,
   progress?: Maybe<Scalars['String']>,
@@ -351,7 +363,9 @@ export type JobInput = {
 /** Represents an update to a `Job`. Fields that are set will be updated. */
 export type JobPatch = {
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerName?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['UUID']>,
+  name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus?: Maybe<PayStatus>,
   progress?: Maybe<Scalars['String']>,
@@ -386,8 +400,12 @@ export type JobsEdge = {
 export enum JobsOrderBy {
   CreatedAtAsc = 'CREATED_AT_ASC',
   CreatedAtDesc = 'CREATED_AT_DESC',
+  CustomerNameAsc = 'CUSTOMER_NAME_ASC',
+  CustomerNameDesc = 'CUSTOMER_NAME_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
   NotesAsc = 'NOTES_ASC',
   NotesDesc = 'NOTES_DESC',
@@ -1158,7 +1176,7 @@ export type UuidFilter = {
 
 export type JobInfoFragment = (
   { __typename: 'Job' }
-  & Pick<Job, 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt'>
+  & Pick<Job, 'name' | 'customerName' | 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt'>
 );
 
 export type MileInfoFragment = (
@@ -1266,6 +1284,23 @@ export type AddMileMutation = (
   )> }
 );
 
+export type EditMileMutationVariables = {
+  id: Scalars['UUID'],
+  patch: MilePatch
+};
+
+
+export type EditMileMutation = (
+  { __typename: 'Mutation' }
+  & { updateMile: Maybe<(
+    { __typename: 'UpdateMilePayload' }
+    & { mile: Maybe<(
+      { __typename: 'Mile' }
+      & MileInfoFragment
+    )> }
+  )> }
+);
+
 export type DeleteMileMutationVariables = {
   id: Scalars['UUID']
 };
@@ -1328,6 +1363,40 @@ export type OpenJobsQuery = (
   )> }
 );
 
+export type ClaimJobMutationVariables = {
+  userID: Scalars['UUID'],
+  id: Scalars['UUID']
+};
+
+
+export type ClaimJobMutation = (
+  { __typename: 'Mutation' }
+  & { updateJob: Maybe<(
+    { __typename: 'UpdateJobPayload' }
+    & { job: Maybe<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
+export type EditJobMutationVariables = {
+  id: Scalars['UUID'],
+  patch: JobPatch
+};
+
+
+export type EditJobMutation = (
+  { __typename: 'Mutation' }
+  & { updateJob: Maybe<(
+    { __typename: 'UpdateJobPayload' }
+    & { job: Maybe<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
 export const MileInfoFragmentDoc = gql`
     fragment MileInfo on Mile {
   createdAt
@@ -1350,6 +1419,8 @@ export const UserMilesFragmentDoc = gql`
     ${MileInfoFragmentDoc}`;
 export const JobInfoFragmentDoc = gql`
     fragment JobInfo on Job {
+  name
+  customerName
   createdAt
   id
   notes
@@ -1579,6 +1650,47 @@ export function useAddMileMutation(baseOptions?: ApolloReactHooks.MutationHookOp
 export type AddMileMutationHookResult = ReturnType<typeof useAddMileMutation>;
 export type AddMileMutationResult = ApolloReactCommon.MutationResult<AddMileMutation>;
 export type AddMileMutationOptions = ApolloReactCommon.BaseMutationOptions<AddMileMutation, AddMileMutationVariables>;
+export const EditMileDocument = gql`
+    mutation editMile($id: UUID!, $patch: MilePatch!) {
+  updateMile(input: {patch: $patch, id: $id}) {
+    mile {
+      ...MileInfo
+    }
+  }
+}
+    ${MileInfoFragmentDoc}`;
+export type EditMileMutationFn = ApolloReactCommon.MutationFunction<EditMileMutation, EditMileMutationVariables>;
+export type EditMileComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditMileMutation, EditMileMutationVariables>, 'mutation'>;
+
+    export const EditMileComponent = (props: EditMileComponentProps) => (
+      <ApolloReactComponents.Mutation<EditMileMutation, EditMileMutationVariables> mutation={EditMileDocument} {...props} />
+    );
+    
+
+/**
+ * __useEditMileMutation__
+ *
+ * To run a mutation, you first call `useEditMileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditMileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editMileMutation, { data, loading, error }] = useEditMileMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      patch: // value for 'patch'
+ *   },
+ * });
+ */
+export function useEditMileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditMileMutation, EditMileMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditMileMutation, EditMileMutationVariables>(EditMileDocument, baseOptions);
+      }
+export type EditMileMutationHookResult = ReturnType<typeof useEditMileMutation>;
+export type EditMileMutationResult = ApolloReactCommon.MutationResult<EditMileMutation>;
+export type EditMileMutationOptions = ApolloReactCommon.BaseMutationOptions<EditMileMutation, EditMileMutationVariables>;
 export const DeleteMileDocument = gql`
     mutation deleteMile($id: UUID!) {
   deleteMile(input: {id: $id}) {
@@ -1739,3 +1851,85 @@ export function useOpenJobsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type OpenJobsQueryHookResult = ReturnType<typeof useOpenJobsQuery>;
 export type OpenJobsLazyQueryHookResult = ReturnType<typeof useOpenJobsLazyQuery>;
 export type OpenJobsQueryResult = ApolloReactCommon.QueryResult<OpenJobsQuery, OpenJobsQueryVariables>;
+export const ClaimJobDocument = gql`
+    mutation claimJob($userID: UUID!, $id: UUID!) {
+  updateJob(input: {patch: {userId: $userID}, id: $id}) {
+    job {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type ClaimJobMutationFn = ApolloReactCommon.MutationFunction<ClaimJobMutation, ClaimJobMutationVariables>;
+export type ClaimJobComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<ClaimJobMutation, ClaimJobMutationVariables>, 'mutation'>;
+
+    export const ClaimJobComponent = (props: ClaimJobComponentProps) => (
+      <ApolloReactComponents.Mutation<ClaimJobMutation, ClaimJobMutationVariables> mutation={ClaimJobDocument} {...props} />
+    );
+    
+
+/**
+ * __useClaimJobMutation__
+ *
+ * To run a mutation, you first call `useClaimJobMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useClaimJobMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [claimJobMutation, { data, loading, error }] = useClaimJobMutation({
+ *   variables: {
+ *      userID: // value for 'userID'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useClaimJobMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<ClaimJobMutation, ClaimJobMutationVariables>) {
+        return ApolloReactHooks.useMutation<ClaimJobMutation, ClaimJobMutationVariables>(ClaimJobDocument, baseOptions);
+      }
+export type ClaimJobMutationHookResult = ReturnType<typeof useClaimJobMutation>;
+export type ClaimJobMutationResult = ApolloReactCommon.MutationResult<ClaimJobMutation>;
+export type ClaimJobMutationOptions = ApolloReactCommon.BaseMutationOptions<ClaimJobMutation, ClaimJobMutationVariables>;
+export const EditJobDocument = gql`
+    mutation editJob($id: UUID!, $patch: JobPatch!) {
+  updateJob(input: {patch: $patch, id: $id}) {
+    job {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type EditJobMutationFn = ApolloReactCommon.MutationFunction<EditJobMutation, EditJobMutationVariables>;
+export type EditJobComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditJobMutation, EditJobMutationVariables>, 'mutation'>;
+
+    export const EditJobComponent = (props: EditJobComponentProps) => (
+      <ApolloReactComponents.Mutation<EditJobMutation, EditJobMutationVariables> mutation={EditJobDocument} {...props} />
+    );
+    
+
+/**
+ * __useEditJobMutation__
+ *
+ * To run a mutation, you first call `useEditJobMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditJobMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editJobMutation, { data, loading, error }] = useEditJobMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      patch: // value for 'patch'
+ *   },
+ * });
+ */
+export function useEditJobMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditJobMutation, EditJobMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditJobMutation, EditJobMutationVariables>(EditJobDocument, baseOptions);
+      }
+export type EditJobMutationHookResult = ReturnType<typeof useEditJobMutation>;
+export type EditJobMutationResult = ApolloReactCommon.MutationResult<EditJobMutation>;
+export type EditJobMutationOptions = ApolloReactCommon.BaseMutationOptions<EditJobMutation, EditJobMutationVariables>;

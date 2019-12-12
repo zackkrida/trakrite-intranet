@@ -1,4 +1,6 @@
 fragment JobInfo on Job {
+  name
+  customerName
   createdAt
   id
   notes
@@ -82,6 +84,14 @@ mutation addMile($mile: MileInput!) {
   }
 }
 
+mutation editMile($id: UUID!, $patch: MilePatch!) {
+  updateMile(input: { patch: $patch, id: $id }) {
+    mile {
+      ...MileInfo
+    }
+  }
+}
+
 mutation deleteMile($id: UUID!) {
   deleteMile(input: { id: $id }) {
     mile {
@@ -109,6 +119,22 @@ mutation deleteJob($id: UUID!) {
 query OpenJobs {
   jobs(filter: { userId: { isNull: true } }) {
     nodes {
+      ...JobInfo
+    }
+  }
+}
+
+mutation claimJob($userID: UUID!, $id: UUID!) {
+  updateJob(input: { patch: { userId: $userID }, id: $id }) {
+    job {
+      ...JobInfo
+    }
+  }
+}
+
+mutation editJob($id: UUID!, $patch: JobPatch!) {
+  updateJob(input: { patch: $patch, id: $id }) {
+    job {
       ...JobInfo
     }
   }

@@ -1,4 +1,7 @@
+// Styles
 import '@reach/dialog/styles.css'
+import 'toasted-notes/src/styles.css'
+
 import Link from 'next/link'
 import cookie from 'cookie'
 import redirect from '../lib/redirect'
@@ -29,6 +32,33 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
       <Link href="/">
         <a>trakrite</a>
       </Link>
+
+      {currentUser && (
+        <nav>
+          <ul>
+            {currentUser.isAdmin === false && (
+              <>
+                <li>
+                  <Link href="/jobs">
+                    <a>My Jobs</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/open-jobs">
+                    <a>Find Jobs</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/miles">
+                    <a>My Miles</a>
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+      )}
+
       <nav>
         <ul>
           {currentUser ? (
@@ -52,6 +82,7 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
         nav ul {
           display: flex;
           justify-content: space-between;
+          align-items: center;
         }
 
         nav ul li {
@@ -59,10 +90,18 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
           padding: 0 0.5em;
         }
 
+        nav {
+          font-size: 14px;
+        }
+
         header {
+          position: sticky;
+          top: 0;
+          z-index: 20;
           padding: 1em;
-          background-color: #fff;
-          box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+          background-color: #1890ff;
+          color: #fff;
+          box-shadow: 0 1px 4px rgba(0, 22, 44, 0.31);
         }
 
         li {
@@ -151,6 +190,10 @@ export const Page = ({ children }: LayoutProps) => {
 
         ul {
           list-style: none;
+        }
+
+        [data-reach-dialog-overlay] {
+          z-index: 30;
         }
       `}</style>
 

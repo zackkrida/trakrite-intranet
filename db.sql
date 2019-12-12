@@ -203,6 +203,8 @@ create table public.job (
   id              uuid primary key default uuid_generate_v1mc(),
   user_id         uuid references public.user(id) on delete set null,
   payment_status  pay_status not null default 'PENDING',
+  name            text,
+  customer_name   text,
   notes           text,
   progress        text,
   recieved_on     timestamp not null default now(),
@@ -219,3 +221,11 @@ create trigger job_updated_at before update
 -- Job table permissions
 grant select on table public.job to trakrite_anonymous, trakrite_user;
 grant insert, update, delete on table public.job to trakrite_user;
+
+
+-- Update User Password function
+create or replace function public.update_password(password text) returns trakrite_private.user_account as $$
+  update trakrite_private.user_account set password_hash = crypt($1, gen_salt('bf')) where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid returning *
+$$ language sql volatile;
+
+grant execute on function public.update_password(text) to trakrite_user;
