@@ -25,18 +25,30 @@
   },
   "scripts": {
     "dev": "next",
-    "build": "next build"
+    "build": "next build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@testing-library/react": "^9.3.3",
+    "@types/jest": "^24.0.23",
     "@types/react": "^16.9.15",
     "@typescript-eslint/eslint-plugin": "^2.11.0",
     "@typescript-eslint/parser": "^2.11.0",
+    "babel-jest": "^24.9.0",
     "eslint": "^6.7.2",
     "eslint-plugin-react": "^7.17.0",
-    "eslint-plugin-react-hooks": "^2.3.0"
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.2.0"
   },
   "volta": {
     "node": "10.17.0",
     "yarn": "1.21.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   }
 }
