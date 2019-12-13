@@ -157,7 +157,7 @@ grant execute on function public.user_full_name(public.user) to trakrite_anonymo
 grant execute on function public.authenticate(text, text) to trakrite_anonymous, trakrite_user;
 grant execute on function public.current_user() to trakrite_anonymous, trakrite_user;
 
-grant execute on function public.register_user(text, text, text, text) to trakrite_anonymous;
+grant execute on function public.register_user(text, text, text, text, text) to trakrite_anonymous, trakrite_user;
 
 
 -- Row level security for user fields
@@ -222,10 +222,17 @@ create trigger job_updated_at before update
 grant select on table public.job to trakrite_anonymous, trakrite_user;
 grant insert, update, delete on table public.job to trakrite_user;
 
+-- Update Current User Password function
+create or replace function public.update_current_password(password text) returns boolean as $$
+  BEGIN
+  if nullif(current_setting('jwt.claims.user_id', true), '')::uuid is null then
+    return false;
+  else
+    update trakrite_private.user_account set password_hash = crypt($1, gen_salt('bf')) where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid;
+    return true;
+  end if;
+  END
+$$ language plpgsql volatile strict security definer;
 
--- Update User Password function
-create or replace function public.update_password(password text) returns trakrite_private.user_account as $$
-  update trakrite_private.user_account set password_hash = crypt($1, gen_salt('bf')) where user_id = nullif(current_setting('jwt.claims.user_id', true), '')::uuid returning *
-$$ language sql volatile;
-
-grant execute on function public.update_password(text) to trakrite_user;
+comment on function public.update_current_password(text) is E'@resultFieldName success';
+grant execute on function public.update_current_password(text) to trakrite_anonymous, trakrite_user;

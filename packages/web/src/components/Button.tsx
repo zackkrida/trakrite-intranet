@@ -29,12 +29,12 @@ export const Button: React.FC<ButtonProps> = ({
       }
 
       button:disabled {
-        color: rgba(0, 0, 0, 0.25);
-        background-color: #f5f5f5;
-        border-color: #d9d9d9;
-        text-shadow: none;
-        box-shadow: none;
-        cursor: not-allowed;
+        color: rgba(0, 0, 0, 0.25) !important;
+        background-color: #f5f5f5 !important;
+        border-color: #d9d9d9 !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+        cursor: not-allowed !important;
       }
 
       /* Theming time! */

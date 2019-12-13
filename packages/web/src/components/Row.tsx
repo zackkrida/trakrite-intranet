@@ -1,9 +1,11 @@
 export const Row = ({
   children,
   expandItems = false,
+  justify = 'START',
 }: {
   children: React.ReactNode
   expandItems?: boolean
+  justify?: 'START' | 'END' | 'MIDDLE'
 }) => (
   <div className="row">
     {children}
@@ -12,6 +14,7 @@ export const Row = ({
         display: flex;
         flex-wrap: wrap;
         align-content: ${expandItems ? 'stretch' : 'start'};
+        justify-content: ${getDirection(justify)};
       }
 
       .row.row > * {
@@ -22,8 +25,8 @@ export const Row = ({
       @supports (column-gap: 8px) {
         .row {
           margin: 0;
-          column-gap: 16px;
-          grid-row-gap: 16px;
+          column-gap: 8px;
+          grid-row-gap: 8px;
         }
 
         .row.row > * {
@@ -38,3 +41,9 @@ export const Row = ({
     `}</style>
   </div>
 )
+
+function getDirection(dir: 'START' | 'END' | 'MIDDLE') {
+  if (dir === 'START') return 'flex-start'
+  if (dir === 'END') return 'flex-end'
+  if (dir === 'MIDDLE') return 'center'
+}

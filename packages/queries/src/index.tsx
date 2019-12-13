@@ -563,6 +563,7 @@ export type Mutation = {
   deleteMile?: Maybe<DeleteMilePayload>,
   /** Registers a single user and creates an account in our app. */
   registerUser?: Maybe<RegisterUserPayload>,
+  updateCurrentPassword?: Maybe<UpdateCurrentPasswordPayload>,
   /** Updates a single `Job` using a unique key and a patch. */
   updateJob?: Maybe<UpdateJobPayload>,
   /** Updates a single `Mile` using a unique key and a patch. */
@@ -605,6 +606,12 @@ export type MutationDeleteMileArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationRegisterUserArgs = {
   input: RegisterUserInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateCurrentPasswordArgs = {
+  input: UpdateCurrentPasswordInput
 };
 
 
@@ -859,6 +866,29 @@ export type StringFilter = {
   startsWith?: Maybe<Scalars['String']>,
   /** Starts with the specified string (case-insensitive). */
   startsWithInsensitive?: Maybe<Scalars['String']>,
+};
+
+/** All input for the `updateCurrentPassword` mutation. */
+export type UpdateCurrentPasswordInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  password: Scalars['String'],
+};
+
+/** The output of our `updateCurrentPassword` mutation. */
+export type UpdateCurrentPasswordPayload = {
+   __typename: 'UpdateCurrentPasswordPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  success?: Maybe<Scalars['Boolean']>,
 };
 
 /** All input for the `updateJob` mutation. */
@@ -1250,6 +1280,8 @@ export type UsersQuery = (
     & { nodes: Array<(
       { __typename: 'User' }
       & UserInfoFragment
+      & UserMilesFragment
+      & UserJobsFragment
     )> }
   )> }
 );
@@ -1349,6 +1381,20 @@ export type DeleteJobMutation = (
   )> }
 );
 
+export type JobsQueryVariables = {};
+
+
+export type JobsQuery = (
+  { __typename: 'Query' }
+  & { jobs: Maybe<(
+    { __typename: 'JobsConnection' }
+    & { nodes: Array<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )> }
+  )> }
+);
+
 export type OpenJobsQueryVariables = {};
 
 
@@ -1394,6 +1440,19 @@ export type EditJobMutation = (
       { __typename: 'Job' }
       & JobInfoFragment
     )> }
+  )> }
+);
+
+export type UpdateCurrentUserPasswordMutationVariables = {
+  password: Scalars['String']
+};
+
+
+export type UpdateCurrentUserPasswordMutation = (
+  { __typename: 'Mutation' }
+  & { updateCurrentPassword: Maybe<(
+    { __typename: 'UpdateCurrentPasswordPayload' }
+    & Pick<UpdateCurrentPasswordPayload, 'success'>
   )> }
 );
 
@@ -1536,10 +1595,14 @@ export const UsersDocument = gql`
   users {
     nodes {
       ...UserInfo
+      ...UserMiles
+      ...UserJobs
     }
   }
 }
-    ${UserInfoFragmentDoc}`;
+    ${UserInfoFragmentDoc}
+${UserMilesFragmentDoc}
+${UserJobsFragmentDoc}`;
 export type UsersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<UsersQuery, UsersQueryVariables>, 'query'>;
 
     export const UsersComponent = (props: UsersComponentProps) => (
@@ -1811,6 +1874,46 @@ export function useDeleteJobMutation(baseOptions?: ApolloReactHooks.MutationHook
 export type DeleteJobMutationHookResult = ReturnType<typeof useDeleteJobMutation>;
 export type DeleteJobMutationResult = ApolloReactCommon.MutationResult<DeleteJobMutation>;
 export type DeleteJobMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteJobMutation, DeleteJobMutationVariables>;
+export const JobsDocument = gql`
+    query Jobs {
+  jobs {
+    nodes {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type JobsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<JobsQuery, JobsQueryVariables>, 'query'>;
+
+    export const JobsComponent = (props: JobsComponentProps) => (
+      <ApolloReactComponents.Query<JobsQuery, JobsQueryVariables> query={JobsDocument} {...props} />
+    );
+    
+
+/**
+ * __useJobsQuery__
+ *
+ * To run a query within a React component, call `useJobsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobsQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJobsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useJobsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<JobsQuery, JobsQueryVariables>) {
+        return ApolloReactHooks.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, baseOptions);
+      }
+export function useJobsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<JobsQuery, JobsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<JobsQuery, JobsQueryVariables>(JobsDocument, baseOptions);
+        }
+export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>;
+export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>;
+export type JobsQueryResult = ApolloReactCommon.QueryResult<JobsQuery, JobsQueryVariables>;
 export const OpenJobsDocument = gql`
     query OpenJobs {
   jobs(filter: {userId: {isNull: true}}) {
@@ -1933,3 +2036,41 @@ export function useEditJobMutation(baseOptions?: ApolloReactHooks.MutationHookOp
 export type EditJobMutationHookResult = ReturnType<typeof useEditJobMutation>;
 export type EditJobMutationResult = ApolloReactCommon.MutationResult<EditJobMutation>;
 export type EditJobMutationOptions = ApolloReactCommon.BaseMutationOptions<EditJobMutation, EditJobMutationVariables>;
+export const UpdateCurrentUserPasswordDocument = gql`
+    mutation updateCurrentUserPassword($password: String!) {
+  updateCurrentPassword(input: {password: $password}) {
+    success
+  }
+}
+    `;
+export type UpdateCurrentUserPasswordMutationFn = ApolloReactCommon.MutationFunction<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>;
+export type UpdateCurrentUserPasswordComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>, 'mutation'>;
+
+    export const UpdateCurrentUserPasswordComponent = (props: UpdateCurrentUserPasswordComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables> mutation={UpdateCurrentUserPasswordDocument} {...props} />
+    );
+    
+
+/**
+ * __useUpdateCurrentUserPasswordMutation__
+ *
+ * To run a mutation, you first call `useUpdateCurrentUserPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCurrentUserPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCurrentUserPasswordMutation, { data, loading, error }] = useUpdateCurrentUserPasswordMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useUpdateCurrentUserPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>(UpdateCurrentUserPasswordDocument, baseOptions);
+      }
+export type UpdateCurrentUserPasswordMutationHookResult = ReturnType<typeof useUpdateCurrentUserPasswordMutation>;
+export type UpdateCurrentUserPasswordMutationResult = ApolloReactCommon.MutationResult<UpdateCurrentUserPasswordMutation>;
+export type UpdateCurrentUserPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>;

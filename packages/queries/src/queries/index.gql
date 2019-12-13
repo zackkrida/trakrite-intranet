@@ -65,6 +65,8 @@ query Users {
   users {
     nodes {
       ...UserInfo
+      ...UserMiles
+      ...UserJobs
     }
   }
 }
@@ -116,6 +118,14 @@ mutation deleteJob($id: UUID!) {
   }
 }
 
+query Jobs {
+  jobs {
+    nodes {
+      ...JobInfo
+    }
+  }
+}
+
 query OpenJobs {
   jobs(filter: { userId: { isNull: true } }) {
     nodes {
@@ -137,5 +147,11 @@ mutation editJob($id: UUID!, $patch: JobPatch!) {
     job {
       ...JobInfo
     }
+  }
+}
+
+mutation updateCurrentUserPassword($password: String!) {
+  updateCurrentPassword(input: { password: $password }) {
+    success
   }
 }

@@ -7,23 +7,14 @@ import {
 } from '@trakrite/queries'
 import format from 'date-fns/format'
 import Link from 'next/link'
-import { useState, EventHandler, FormEventHandler } from 'react'
+import { useState, FormEventHandler } from 'react'
 import Dialog from '@reach/dialog'
 import { Stack } from './Stack'
 import { TinyButton } from '../components/TinyButton'
 import { Button } from './Button'
 import { Row } from './Row'
 import toaster from 'toasted-notes'
-
-const date = (str: string) => {
-  const date = new Date(str)
-
-  if (date instanceof Date) {
-    return format(date, 'MM/dd/yy')
-  } else {
-    throw Error('Invalid date')
-  }
-}
+import { date } from '../lib/formatters'
 
 export const OpenJobs = ({
   user,
