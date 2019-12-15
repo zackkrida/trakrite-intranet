@@ -8,6 +8,10 @@ fragment JobInfo on Job {
   progress
   recievedOn
   updatedAt
+  userId
+  user {
+    ...UserInfo
+  }
 }
 
 fragment MileInfo on Mile {
@@ -134,6 +138,12 @@ query Jobs {
   }
 }
 
+query Job($id: UUID!) {
+  job(id: $id) {
+    ...JobInfo
+  }
+}
+
 query OpenJobs {
   jobs(filter: { userId: { isNull: true } }) {
     nodes {
@@ -164,11 +174,20 @@ mutation updateCurrentUserPassword($password: String!) {
   }
 }
 
-mutation assignJobs($userId: UUID, $jobs: [UUID]!) {
+mutation assignJobs($userId: UUID!, $jobs: [UUID]!) {
   __typename
   assignJobs(input: { userId: $userId, jobs: $jobs }) {
     jobs {
-      id
+      ...JobInfo
+    }
+  }
+}
+
+mutation unassignJobs($jobs: [UUID]!) {
+  __typename
+  unassignJobs(input: { jobs: $jobs }) {
+    jobs {
+      ...JobInfo
     }
   }
 }

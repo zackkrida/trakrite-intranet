@@ -8,10 +8,10 @@ export const CardSet = ({ children }: { children: React.ReactNode }) => (
         grid-gap: 1em;
       }
 
-      @media screen and (min-width: 450px) {
+      @media screen and (min-width: 340px) {
         .cardSet {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
           grid-gap: 1em;
         }
       }

@@ -239,8 +239,15 @@ grant execute on function public.update_current_password(text) to trakrite_anony
 
 
 -- Function to assign jobs to a user
-create or replace function public.assign_jobs(user_id uuid default null, jobs uuid[] default null) returns setof job as $$
+create or replace function public.assign_jobs(user_id uuid, jobs uuid[]) returns setof job as $$
   update public.job set user_id = $1 where id = any ($2) returning *;
 $$ language sql volatile strict security definer;
 
 grant execute on function public.assign_jobs(uuid, uuid[]) to trakrite_anonymous, trakrite_user;
+
+-- Function to assign jobs to a user
+create or replace function public.unassign_jobs(jobs uuid[]) returns setof job as $$
+  update public.job set user_id = null where id = any ($2) returning *;
+$$ language sql volatile strict security definer;
+
+grant execute on function public.unassign_jobs(uuid[]) to trakrite_anonymous, trakrite_user;

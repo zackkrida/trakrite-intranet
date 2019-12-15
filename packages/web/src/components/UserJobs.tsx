@@ -3,7 +3,7 @@ import {
   JobInfoFragment,
   UserInfoFragment,
   UserJobsFragment,
-  useAssignJobsMutation,
+  useUnassignJobsMutation,
 } from '@trakrite/queries'
 import format from 'date-fns/format'
 import Link from 'next/link'
@@ -39,7 +39,7 @@ export const UserJobs = ({
   const jobs = user.jobs.nodes
   const [editing, setEditing] = useState<null | JobInfoFragment>(null)
   const [removing, setRemoving] = useState<null | JobInfoFragment>(null)
-  const [assignJobs] = useAssignJobsMutation()
+  const [unassignJobs] = useUnassignJobsMutation()
   const client = useApolloClient()
 
   return (
@@ -64,8 +64,8 @@ export const UserJobs = ({
               onSubmit={async event => {
                 event.preventDefault()
                 try {
-                  const { errors } = await assignJobs({
-                    variables: { userId: null, jobs: [removing.id] },
+                  const { errors } = await unassignJobs({
+                    variables: { jobs: [removing.id] },
                   })
 
                   if (!errors) {
@@ -112,10 +112,10 @@ export const UserJobs = ({
               }
             />
           ))}
-          {limit > -1 && (
+          {limit > 0 && (
             <p style={{ lineHeight: 1 }}>
               <small>
-                Showing up to {limit} most recently added trips.{' '}
+                Showing up to {limit} most recently added jobs.{' '}
                 <Link href="/jobs">
                   <a style={{ display: 'inline' }}>Click to view all.</a>
                 </Link>
