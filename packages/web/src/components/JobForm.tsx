@@ -11,6 +11,7 @@ import { Input } from './Input'
 import { Row } from './Row'
 import { Button } from './Button'
 import format from 'date-fns/format'
+import { useApolloClient } from '@apollo/react-hooks'
 
 export const JobForm = ({
   job,
@@ -29,6 +30,8 @@ export const JobForm = ({
   )
   const [progress, setProgress] = useState(job ? job.progress : '')
 
+  const client = useApolloClient()
+
   // Job mutation
   const [editJob] = useEditJobMutation()
   const [addJob] = useAddJobMutation()
@@ -46,10 +49,10 @@ export const JobForm = ({
             progress,
           },
         },
-        refetchQueries: ['CurrentUser', 'JobQuery', 'JobsQuery'],
       })
 
       if (!errors) {
+        client.reFetchObservableQueries()
         onComplete()
         toaster.notify('Job edited.')
       }
