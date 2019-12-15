@@ -10,7 +10,8 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "dev": "lerna run --parallel dev"
+    "dev": "lerna run --parallel dev",
+    "test": "cd packages/web && yarn test:watch"
   },
   "prettier": {
     "trailingComma": "es5",

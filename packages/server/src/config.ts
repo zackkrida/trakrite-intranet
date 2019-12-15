@@ -35,6 +35,7 @@ const pg: PostGraphileOptions = {
   bodySizeLimit: '5MB',
   pgDefaultRole: DB_DEFAULT_ROLE,
   graphiql: !isProd,
+  allowExplain: !isProd,
   enableCors: !isProd,
   jwtSecret: JWT_SECRET,
   jwtPgTypeIdentifier: JWT_TYPE_ID,

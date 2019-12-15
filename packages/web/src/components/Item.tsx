@@ -8,7 +8,7 @@ export const Item = ({
 }: {
   title: React.ReactNode
   subtitle?: React.ReactNode
-  right: React.ReactNode
+  right?: React.ReactNode
   actions?: React.ReactNode
 }) => (
   <article
@@ -44,8 +44,12 @@ export const Item = ({
         alignItems: 'center',
       }}
     >
-      <div style={{ marginRight: '12px' }}>{right}</div>
-      {actions && <Row justify="END">{actions}</Row>}
+      {right && <div style={{ marginRight: '12px' }}>{right}</div>}
+      {actions && (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          {actions}
+        </div>
+      )}
     </footer>
   </article>
 )

@@ -28,6 +28,30 @@ export type Scalars = {
   JwtToken: any,
 };
 
+/** All input for the `assignJobs` mutation. */
+export type AssignJobsInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  jobs: Array<Maybe<Scalars['UUID']>>,
+  userId: Scalars['UUID'],
+};
+
+/** The output of our `assignJobs` mutation. */
+export type AssignJobsPayload = {
+   __typename: 'AssignJobsPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  jobs?: Maybe<Array<Job>>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+};
+
 /** All input for the `authenticate` mutation. */
 export type AuthenticateInput = {
   /** 
@@ -551,6 +575,7 @@ export enum MilesOrderBy {
 /** The root mutation type which contains root level fields which mutate data. */
 export type Mutation = {
    __typename: 'Mutation',
+  assignJobs?: Maybe<AssignJobsPayload>,
   /** Creates a JWT token that will securely identify a user and give them certain permissions. */
   authenticate?: Maybe<AuthenticatePayload>,
   /** Creates a single `Job`. */
@@ -563,6 +588,7 @@ export type Mutation = {
   deleteMile?: Maybe<DeleteMilePayload>,
   /** Registers a single user and creates an account in our app. */
   registerUser?: Maybe<RegisterUserPayload>,
+  unassignJobs?: Maybe<UnassignJobsPayload>,
   updateCurrentPassword?: Maybe<UpdateCurrentPasswordPayload>,
   /** Updates a single `Job` using a unique key and a patch. */
   updateJob?: Maybe<UpdateJobPayload>,
@@ -570,6 +596,12 @@ export type Mutation = {
   updateMile?: Maybe<UpdateMilePayload>,
   /** Updates a single `User` using a unique key and a patch. */
   updateUser?: Maybe<UpdateUserPayload>,
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationAssignJobsArgs = {
+  input: AssignJobsInput
 };
 
 
@@ -606,6 +638,12 @@ export type MutationDeleteMileArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationRegisterUserArgs = {
   input: RegisterUserInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUnassignJobsArgs = {
+  input: UnassignJobsInput
 };
 
 
@@ -866,6 +904,29 @@ export type StringFilter = {
   startsWith?: Maybe<Scalars['String']>,
   /** Starts with the specified string (case-insensitive). */
   startsWithInsensitive?: Maybe<Scalars['String']>,
+};
+
+/** All input for the `unassignJobs` mutation. */
+export type UnassignJobsInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  jobs: Array<Maybe<Scalars['UUID']>>,
+};
+
+/** The output of our `unassignJobs` mutation. */
+export type UnassignJobsPayload = {
+   __typename: 'UnassignJobsPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  jobs?: Maybe<Array<Job>>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
 };
 
 /** All input for the `updateCurrentPassword` mutation. */
@@ -1206,7 +1267,11 @@ export type UuidFilter = {
 
 export type JobInfoFragment = (
   { __typename: 'Job' }
-  & Pick<Job, 'name' | 'customerName' | 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt'>
+  & Pick<Job, 'name' | 'customerName' | 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt' | 'userId'>
+  & { user: Maybe<(
+    { __typename: 'User' }
+    & UserInfoFragment
+  )> }
 );
 
 export type MileInfoFragment = (
@@ -1263,6 +1328,21 @@ export type CurrentUserQueryVariables = {};
 export type CurrentUserQuery = (
   { __typename: 'Query' }
   & { currentUser: Maybe<(
+    { __typename: 'User' }
+    & UserInfoFragment
+    & UserMilesFragment
+    & UserJobsFragment
+  )> }
+);
+
+export type UserQueryVariables = {
+  id: Scalars['UUID']
+};
+
+
+export type UserQuery = (
+  { __typename: 'Query' }
+  & { user: Maybe<(
     { __typename: 'User' }
     & UserInfoFragment
     & UserMilesFragment
@@ -1395,6 +1475,19 @@ export type JobsQuery = (
   )> }
 );
 
+export type JobQueryVariables = {
+  id: Scalars['UUID']
+};
+
+
+export type JobQuery = (
+  { __typename: 'Query' }
+  & { job: Maybe<(
+    { __typename: 'Job' }
+    & JobInfoFragment
+  )> }
+);
+
 export type OpenJobsQueryVariables = {};
 
 
@@ -1456,6 +1549,39 @@ export type UpdateCurrentUserPasswordMutation = (
   )> }
 );
 
+export type AssignJobsMutationVariables = {
+  userId: Scalars['UUID'],
+  jobs: Array<Maybe<Scalars['UUID']>>
+};
+
+
+export type AssignJobsMutation = (
+  { __typename: 'Mutation' }
+  & { assignJobs: Maybe<(
+    { __typename: 'AssignJobsPayload' }
+    & { jobs: Maybe<Array<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )>> }
+  )> }
+);
+
+export type UnassignJobsMutationVariables = {
+  jobs: Array<Maybe<Scalars['UUID']>>
+};
+
+
+export type UnassignJobsMutation = (
+  { __typename: 'Mutation' }
+  & { unassignJobs: Maybe<(
+    { __typename: 'UnassignJobsPayload' }
+    & { jobs: Maybe<Array<(
+      { __typename: 'Job' }
+      & JobInfoFragment
+    )>> }
+  )> }
+);
+
 export const MileInfoFragmentDoc = gql`
     fragment MileInfo on Mile {
   createdAt
@@ -1476,6 +1602,16 @@ export const UserMilesFragmentDoc = gql`
   }
 }
     ${MileInfoFragmentDoc}`;
+export const UserInfoFragmentDoc = gql`
+    fragment UserInfo on User {
+  id
+  firstName
+  lastName
+  jobTitle
+  fullName
+  isAdmin
+}
+    `;
 export const JobInfoFragmentDoc = gql`
     fragment JobInfo on Job {
   name
@@ -1487,8 +1623,12 @@ export const JobInfoFragmentDoc = gql`
   progress
   recievedOn
   updatedAt
+  userId
+  user {
+    ...UserInfo
+  }
 }
-    `;
+    ${UserInfoFragmentDoc}`;
 export const UserJobsFragmentDoc = gql`
     fragment UserJobs on User {
   jobs {
@@ -1498,16 +1638,6 @@ export const UserJobsFragmentDoc = gql`
   }
 }
     ${JobInfoFragmentDoc}`;
-export const UserInfoFragmentDoc = gql`
-    fragment UserInfo on User {
-  id
-  firstName
-  lastName
-  jobTitle
-  fullName
-  isAdmin
-}
-    `;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($user: RegisterUserInput!) {
   registerUser(input: $user) {
@@ -1590,6 +1720,49 @@ export function useCurrentUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type CurrentUserQueryHookResult = ReturnType<typeof useCurrentUserQuery>;
 export type CurrentUserLazyQueryHookResult = ReturnType<typeof useCurrentUserLazyQuery>;
 export type CurrentUserQueryResult = ApolloReactCommon.QueryResult<CurrentUserQuery, CurrentUserQueryVariables>;
+export const UserDocument = gql`
+    query User($id: UUID!) {
+  user(id: $id) {
+    ...UserInfo
+    ...UserMiles
+    ...UserJobs
+  }
+}
+    ${UserInfoFragmentDoc}
+${UserMilesFragmentDoc}
+${UserJobsFragmentDoc}`;
+export type UserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<UserQuery, UserQueryVariables>, 'query'> & ({ variables: UserQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const UserComponent = (props: UserComponentProps) => (
+      <ApolloReactComponents.Query<UserQuery, UserQueryVariables> query={UserDocument} {...props} />
+    );
+    
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserQuery, UserQueryVariables>) {
+        return ApolloReactHooks.useQuery<UserQuery, UserQueryVariables>(UserDocument, baseOptions);
+      }
+export function useUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, baseOptions);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = ApolloReactCommon.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersDocument = gql`
     query Users {
   users {
@@ -1914,6 +2087,45 @@ export function useJobsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>;
 export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>;
 export type JobsQueryResult = ApolloReactCommon.QueryResult<JobsQuery, JobsQueryVariables>;
+export const JobDocument = gql`
+    query Job($id: UUID!) {
+  job(id: $id) {
+    ...JobInfo
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type JobComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<JobQuery, JobQueryVariables>, 'query'> & ({ variables: JobQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const JobComponent = (props: JobComponentProps) => (
+      <ApolloReactComponents.Query<JobQuery, JobQueryVariables> query={JobDocument} {...props} />
+    );
+    
+
+/**
+ * __useJobQuery__
+ *
+ * To run a query within a React component, call `useJobQuery` and pass it any options that fit your needs.
+ * When your component renders, `useJobQuery` returns an object from Apollo Client that contains loading, error, and data properties 
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useJobQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useJobQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<JobQuery, JobQueryVariables>) {
+        return ApolloReactHooks.useQuery<JobQuery, JobQueryVariables>(JobDocument, baseOptions);
+      }
+export function useJobLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<JobQuery, JobQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, baseOptions);
+        }
+export type JobQueryHookResult = ReturnType<typeof useJobQuery>;
+export type JobLazyQueryHookResult = ReturnType<typeof useJobLazyQuery>;
+export type JobQueryResult = ApolloReactCommon.QueryResult<JobQuery, JobQueryVariables>;
 export const OpenJobsDocument = gql`
     query OpenJobs {
   jobs(filter: {userId: {isNull: true}}) {
@@ -2074,3 +2286,86 @@ export function useUpdateCurrentUserPasswordMutation(baseOptions?: ApolloReactHo
 export type UpdateCurrentUserPasswordMutationHookResult = ReturnType<typeof useUpdateCurrentUserPasswordMutation>;
 export type UpdateCurrentUserPasswordMutationResult = ApolloReactCommon.MutationResult<UpdateCurrentUserPasswordMutation>;
 export type UpdateCurrentUserPasswordMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateCurrentUserPasswordMutation, UpdateCurrentUserPasswordMutationVariables>;
+export const AssignJobsDocument = gql`
+    mutation assignJobs($userId: UUID!, $jobs: [UUID]!) {
+  __typename
+  assignJobs(input: {userId: $userId, jobs: $jobs}) {
+    jobs {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type AssignJobsMutationFn = ApolloReactCommon.MutationFunction<AssignJobsMutation, AssignJobsMutationVariables>;
+export type AssignJobsComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AssignJobsMutation, AssignJobsMutationVariables>, 'mutation'>;
+
+    export const AssignJobsComponent = (props: AssignJobsComponentProps) => (
+      <ApolloReactComponents.Mutation<AssignJobsMutation, AssignJobsMutationVariables> mutation={AssignJobsDocument} {...props} />
+    );
+    
+
+/**
+ * __useAssignJobsMutation__
+ *
+ * To run a mutation, you first call `useAssignJobsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAssignJobsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [assignJobsMutation, { data, loading, error }] = useAssignJobsMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      jobs: // value for 'jobs'
+ *   },
+ * });
+ */
+export function useAssignJobsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AssignJobsMutation, AssignJobsMutationVariables>) {
+        return ApolloReactHooks.useMutation<AssignJobsMutation, AssignJobsMutationVariables>(AssignJobsDocument, baseOptions);
+      }
+export type AssignJobsMutationHookResult = ReturnType<typeof useAssignJobsMutation>;
+export type AssignJobsMutationResult = ApolloReactCommon.MutationResult<AssignJobsMutation>;
+export type AssignJobsMutationOptions = ApolloReactCommon.BaseMutationOptions<AssignJobsMutation, AssignJobsMutationVariables>;
+export const UnassignJobsDocument = gql`
+    mutation unassignJobs($jobs: [UUID]!) {
+  __typename
+  unassignJobs(input: {jobs: $jobs}) {
+    jobs {
+      ...JobInfo
+    }
+  }
+}
+    ${JobInfoFragmentDoc}`;
+export type UnassignJobsMutationFn = ApolloReactCommon.MutationFunction<UnassignJobsMutation, UnassignJobsMutationVariables>;
+export type UnassignJobsComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UnassignJobsMutation, UnassignJobsMutationVariables>, 'mutation'>;
+
+    export const UnassignJobsComponent = (props: UnassignJobsComponentProps) => (
+      <ApolloReactComponents.Mutation<UnassignJobsMutation, UnassignJobsMutationVariables> mutation={UnassignJobsDocument} {...props} />
+    );
+    
+
+/**
+ * __useUnassignJobsMutation__
+ *
+ * To run a mutation, you first call `useUnassignJobsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnassignJobsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unassignJobsMutation, { data, loading, error }] = useUnassignJobsMutation({
+ *   variables: {
+ *      jobs: // value for 'jobs'
+ *   },
+ * });
+ */
+export function useUnassignJobsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UnassignJobsMutation, UnassignJobsMutationVariables>) {
+        return ApolloReactHooks.useMutation<UnassignJobsMutation, UnassignJobsMutationVariables>(UnassignJobsDocument, baseOptions);
+      }
+export type UnassignJobsMutationHookResult = ReturnType<typeof useUnassignJobsMutation>;
+export type UnassignJobsMutationResult = ApolloReactCommon.MutationResult<UnassignJobsMutation>;
+export type UnassignJobsMutationOptions = ApolloReactCommon.BaseMutationOptions<UnassignJobsMutation, UnassignJobsMutationVariables>;

@@ -101,6 +101,7 @@ export const OpenJobs = ({
               </small>
             </p>
           )}
+
           <Dialog isOpen={claiming != null} onDismiss={() => setClaiming(null)}>
             {claiming && (
               <Stack space="small">

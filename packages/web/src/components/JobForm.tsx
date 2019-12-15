@@ -92,10 +92,11 @@ export const JobForm = ({
       <Stack space="small">
         {job && (
           <div>
-            <strong>Job Name:</strong>
+            <strong>Job Name: </strong>
             {job.name}
             <br />
-            <strong>Customer:</strong> {job.customerName}
+            <strong>Customer: </strong>
+            {job.customerName}
           </div>
         )}
 

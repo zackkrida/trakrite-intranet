@@ -27,7 +27,7 @@ export const SignInBox = () => {
 
     try {
       // Remove any existing auth cookies before attempting to sign in. This can prevent isseus where existing logins have expired.
-      document.cookie = cookie.serialize('poToken', '', { maxAge: -1 })
+      document.cookie = cookie.serialize('tokennnn', '', { maxAge: -1 })
 
       const { data, errors } = await signIn({
         variables: {
@@ -60,7 +60,7 @@ export const SignInBox = () => {
           redirect(null, '/')
         })
       } else {
-        // our login failed
+        // our login failed, clear the cookie in case of expiry
         setMessage('Invalid credentials, please try again.')
       }
     } catch (error) {
