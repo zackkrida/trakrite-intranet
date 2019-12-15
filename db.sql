@@ -247,7 +247,7 @@ grant execute on function public.assign_jobs(uuid, uuid[]) to trakrite_anonymous
 
 -- Function to assign jobs to a user
 create or replace function public.unassign_jobs(jobs uuid[]) returns setof job as $$
-  update public.job set user_id = null where id = any ($2) returning *;
+  update public.job set user_id = null where id = any ($1) returning *;
 $$ language sql volatile strict security definer;
 
 grant execute on function public.unassign_jobs(uuid[]) to trakrite_anonymous, trakrite_user;
