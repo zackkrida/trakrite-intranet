@@ -3,6 +3,7 @@ import {
   JobInfoFragment,
   UserInfoFragment,
   UserJobsFragment,
+  useAssignJobsMutation,
 } from '@trakrite/queries'
 import format from 'date-fns/format'
 import Link from 'next/link'
@@ -10,6 +11,11 @@ import { useState } from 'react'
 import { JobForm } from '../components/JobForm'
 import { Stack } from './Stack'
 import { TinyButton } from './TinyButton'
+import { Item } from './Item'
+import toaster from 'toasted-notes'
+import { Row } from './Row'
+import { Button } from './Button'
+import { useApolloClient } from '@apollo/react-hooks'
 
 const date = (str: string) => {
   const date = new Date(str)
@@ -24,12 +30,17 @@ const date = (str: string) => {
 export const UserJobs = ({
   user,
   limit = undefined,
+  showUnassign = false,
 }: {
   user: UserInfoFragment & UserJobsFragment
   limit?: number
+  showUnassign?: boolean
 }) => {
   const jobs = user.jobs.nodes
   const [editing, setEditing] = useState<null | JobInfoFragment>(null)
+  const [removing, setRemoving] = useState<null | JobInfoFragment>(null)
+  const [assignJobs] = useAssignJobsMutation()
+  const client = useApolloClient()
 
   return (
     <>
@@ -44,46 +55,63 @@ export const UserJobs = ({
         )}
       </Dialog>
 
+      <Dialog isOpen={removing != null} onDismiss={() => setRemoving(null)}>
+        {removing && (
+          <Stack space="small">
+            <h1>Confirm removing job</h1>
+            <form
+              action=""
+              onSubmit={async event => {
+                event.preventDefault()
+                try {
+                  const { errors } = await assignJobs({
+                    variables: { userId: null, jobs: [removing.id] },
+                  })
+
+                  if (!errors) {
+                    client.reFetchObservableQueries()
+                    toaster.notify('Removed job successfully')
+                    setRemoving(null)
+                  }
+                } catch (error) {
+                  console.error(error.message)
+                }
+              }}
+            >
+              <Stack space="small">
+                <p>Confirm removal of job {removing.name}.</p>
+                <Row>
+                  <Button theme="PRIMARY" type="submit">
+                    Remove user
+                  </Button>
+                  <Button onClick={() => setRemoving(null)}>Cancel</Button>
+                </Row>
+              </Stack>
+            </form>
+          </Stack>
+        )}
+      </Dialog>
+
       {jobs.length > 0 ? (
-        <>
-          <ul>
-            {jobs.slice(0, limit).map(job => (
-              <li
-                key={job.id}
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  padding: '4px 12px',
-                  margin: '0 -12px',
-                  borderBottom: '1px solid #e3e3e3',
-                }}
-              >
-                <span
-                  style={{
-                    fontFamily: 'monospaced, monospace, sans-serif',
-                    fontSize: '11px',
-                    fontWeight: 'bold',
-                    letterSpacing: '-.25px',
-                    marginRight: '1em',
-                  }}
-                >
-                  {date(job.recievedOn)}
-                </span>
-                <div>
-                  <strong>{job.name} </strong> for {job.customerName}
-                  {job.notes && (
-                    <>
-                      <br />
-                      <p>{job.notes}</p>
-                    </>
-                  )}
-                </div>
-                <span style={{ marginLeft: 'auto', alignSelf: 'center' }}>
+        <div>
+          {jobs.slice(0, limit).map(job => (
+            <Item
+              key={job.id}
+              title={job.name}
+              subtitle={job.customerName}
+              right={date(job.recievedOn)}
+              actions={
+                <>
                   <TinyButton onClick={() => setEditing(job)}>Edit</TinyButton>
-                </span>
-              </li>
-            ))}
-          </ul>
+                  {showUnassign && (
+                    <TinyButton onClick={() => setRemoving(job)}>
+                      Unassign
+                    </TinyButton>
+                  )}
+                </>
+              }
+            />
+          ))}
           {limit > -1 && (
             <p style={{ lineHeight: 1 }}>
               <small>
@@ -94,7 +122,7 @@ export const UserJobs = ({
               </small>
             </p>
           )}
-        </>
+        </div>
       ) : (
         <>
           <p>No jobs logged yet.</p>

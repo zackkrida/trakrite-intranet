@@ -99,7 +99,7 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
           top: 0;
           z-index: 20;
           padding: 1em;
-          background-color: #1890ff;
+          background-color: #183a59;
           color: #fff;
           box-shadow: 0 1px 4px rgba(0, 22, 44, 0.31);
         }
@@ -190,6 +190,12 @@ export const Page = ({ children }: LayoutProps) => {
 
         ul {
           list-style: none;
+        }
+
+        hr {
+          border: none;
+          height: 1px;
+          background-color: #e3e3e3;
         }
 
         [data-reach-dialog-overlay] {

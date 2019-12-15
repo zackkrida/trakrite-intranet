@@ -61,6 +61,14 @@ query CurrentUser {
   }
 }
 
+query User($id: UUID!) {
+  user(id: $id) {
+    ...UserInfo
+    ...UserMiles
+    ...UserJobs
+  }
+}
+
 query Users {
   users {
     nodes {
@@ -153,5 +161,14 @@ mutation editJob($id: UUID!, $patch: JobPatch!) {
 mutation updateCurrentUserPassword($password: String!) {
   updateCurrentPassword(input: { password: $password }) {
     success
+  }
+}
+
+mutation assignJobs($userId: UUID, $jobs: [UUID]!) {
+  __typename
+  assignJobs(input: { userId: $userId, jobs: $jobs }) {
+    jobs {
+      id
+    }
   }
 }

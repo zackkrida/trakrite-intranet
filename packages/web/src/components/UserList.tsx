@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { useUsersQuery } from '@trakrite/queries'
-import { TinyButton } from './TinyButton'
 import { Item } from './Item'
 
 export const UserList = ({
@@ -38,10 +37,9 @@ export const UserList = ({
                 </p>
               </>
             }
-            actions={<TinyButton>View</TinyButton>}
           />
         ))}
-      {!loading && users.length > 0 && (
+      {!loading && users.length > 0 && limit > 0 && (
         <p>
           <small>
             Showing up to {limit} users.{' '}

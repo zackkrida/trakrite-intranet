@@ -1,3 +1,29 @@
+"""All input for the `assignJobs` mutation."""
+input AssignJobsInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  jobs: [UUID]
+  userId: UUID
+}
+
+"""The output of our `assignJobs` mutation."""
+type AssignJobsPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  jobs: [Job!]
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+}
+
 """All input for the `authenticate` mutation."""
 input AuthenticateInput {
   """
@@ -650,6 +676,13 @@ enum MilesOrderBy {
 The root mutation type which contains root level fields which mutate data.
 """
 type Mutation {
+  assignJobs(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: AssignJobsInput!
+  ): AssignJobsPayload
+
   """
   Creates a JWT token that will securely identify a user and give them certain permissions.
   """

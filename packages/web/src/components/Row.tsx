@@ -22,17 +22,15 @@ export const Row = ({
         margin-bottom: 8px;
       }
 
-      @supports (column-gap: 8px) {
-        .row {
-          margin: 0;
-          column-gap: 8px;
-          grid-row-gap: 8px;
-        }
+      .row.row > *:first-child {
+        margin-left: 0;
+      }
 
-        .row.row > * {
-          margin: 0;
-          margin-bottom: 0;
-        }
+       {
+        /* Until chrome supports column-gap for flex layout */
+      }
+      .row > *:not(:last-child) {
+        margin-right: 8px;
       }
 
       .row > * {
