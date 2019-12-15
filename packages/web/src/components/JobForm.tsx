@@ -46,7 +46,7 @@ export const JobForm = ({
             progress,
           },
         },
-        refetchQueries: ['CurrentUser'],
+        refetchQueries: ['CurrentUser', 'JobQuery', 'JobsQuery'],
       })
 
       if (!errors) {
