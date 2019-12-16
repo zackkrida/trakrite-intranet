@@ -77,12 +77,12 @@ export const JobForm = ({
             progress,
           },
         },
-        refetchQueries: ['CurrentUser'],
       })
 
       if (!errors) {
         onComplete()
         toaster.notify('Job created.')
+        client.reFetchObservableQueries()
       }
     } catch (error) {
       console.error(error)
