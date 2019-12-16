@@ -31,7 +31,7 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
   return (
     <header>
       <Link href="/">
-        <a>trakrite</a>
+        <a>TrakRite</a>
       </Link>
 
       {currentUser && (

@@ -90,11 +90,11 @@ export const SignInBox = () => {
           <Button theme="PRIMARY" type="submit">
             Sign In
           </Button>
-          <Link href="/reset-password">
+          {/* <Link href="/reset-password">
             <a>
               <Button>Forgot password?</Button>
             </a>
-          </Link>
+          </Link> */}
         </Row>
       </Stack>
     </form>

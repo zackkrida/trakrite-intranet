@@ -106,9 +106,10 @@ export const OpenJobs = ({
             {claiming && (
               <Stack space="small">
                 <h1>Confirm claiming job</h1>
+                <p>Please conform that you want to claim this job.</p>
                 <p>
-                  Once a job is claimed you will have to be removed by an
-                  administrator.
+                  Please note: Once a job is claimed, if you want to remove it,
+                  you will have to be removed by an administrator account.
                 </p>
                 <div>
                   <p>
@@ -129,7 +130,7 @@ export const OpenJobs = ({
                 <form action="" onSubmit={handleClaimJob}>
                   <Row>
                     <Button type="submit" theme="PRIMARY">
-                      Accept Job
+                      Claim Job
                     </Button>
                     <Button onClick={() => setClaiming(null)}>Cancel</Button>
                   </Row>

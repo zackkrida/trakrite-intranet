@@ -16,7 +16,10 @@ const SignIn = () => (
       <Card>
         <Stack space="small">
           <h1>Sign In</h1>
-          <p>Sign into trakrite with your existing account.</p>
+          <p>
+            Sign into the TrakRite Internal Dashboard with your existing
+            account.
+          </p>
           <SignInBox />
         </Stack>
       </Card>
