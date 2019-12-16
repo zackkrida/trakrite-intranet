@@ -14,7 +14,7 @@
     }
   ],
   "description": "Internal app to manage Trakrite employees and jobs.",
-  "theme_color": "#3367D6",
+  "theme_color": "#183a59",
   "background_color": "#f0f2f5",
   "start_url": "/",
   "display": "standalone",
