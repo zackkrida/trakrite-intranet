@@ -201,6 +201,13 @@ export const Page = ({ children }: LayoutProps) => {
         [data-reach-dialog-overlay] {
           z-index: 30;
         }
+
+        @media screen and (max-width: 1000px) {
+          [data-reach-dialog-content] {
+            width: calc(100% - 1.5rem);
+            padding: 1.5rem;
+          }
+        }
       `}</style>
 
       <style jsx>{`
