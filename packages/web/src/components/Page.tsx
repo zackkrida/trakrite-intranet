@@ -12,6 +12,7 @@ import {
   UserJobsFragment,
 } from '@trakrite/queries'
 import { useApolloClient } from '@apollo/react-hooks'
+import Head from 'next/head'
 
 const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
   const client = useApolloClient()
@@ -145,6 +146,9 @@ export const Page = ({ children }: LayoutProps) => {
 
   return (
     <div className="app">
+      <Head>
+        <link key="manifest" rel="manifest" href="/manifest.json"></link>
+      </Head>
       <Header currentUser={currentUser} />
       <Main>
         {typeof children === 'function' ? children({ currentUser }) : children}
