@@ -32,7 +32,7 @@ const Home = () => (
         >
           <Card>
             <Stack space="small">
-              <h1>Welcome to the TrakRite Intranet</h1>
+              <h1>Welcome to the TrakRite Internal Dashboard</h1>
               <p>Please sign in to continue.</p>
               <SignInBox />
             </Stack>

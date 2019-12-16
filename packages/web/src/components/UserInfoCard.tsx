@@ -41,7 +41,7 @@ export const UserInfoCard = ({ user }: { user: UserInfoFragment }) => {
   return (
     <Card>
       <Stack space="small">
-        <h1>TrakRite Intranet</h1>
+        <h1>TrakRite Internal Dashboard</h1>
         <div>
           <p>Welcome {user.fullName}!</p>
           {user.isAdmin && (
