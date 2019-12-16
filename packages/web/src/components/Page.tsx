@@ -64,7 +64,7 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
               <>
                 <li>
                   <Link href="/jobs">
-                    <a>My Jobs</a>
+                    <a>Jobs</a>
                   </Link>
                 </li>
                 <li>
