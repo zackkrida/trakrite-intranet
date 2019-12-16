@@ -1,6 +1,6 @@
 {
-  "short_name": "Trakrite",
-  "name": "Trakrite Intranet",
+  "short_name": "TrakRite",
+  "name": "TrakRite Intranet",
   "icons": [
     {
       "src": "images/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "description": "Internal app to manage Trakrite employees and jobs.",
+  "description": "Internal app to manage TrakRite employees and jobs.",
   "theme_color": "#183a59",
   "background_color": "#f0f2f5",
   "start_url": "/",

@@ -178,7 +178,7 @@ const Main = ({ children }: { children: React.ReactNode }) => (
 
 const Footer = () => (
   <footer>
-    &copy; 2019-{new Date().getFullYear()} Trakrite Global. All Rights Reserved.
+    &copy; 2019-{new Date().getFullYear()} TrakRite Global. All Rights Reserved.
     <style jsx>{`
       footer {
         font-size: 0.85em;
