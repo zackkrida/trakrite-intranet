@@ -64,7 +64,7 @@ export const JobList = ({
           />
         ))}
       {!loading && jobs.length === 0 && <p>There are no jobs.</p>}
-      {!loading && jobs.length > 0 && (
+      {!loading && jobs.length > 0 && limit > 0 && (
         <p>
           <small>
             Showing up to {limit} jobs.{' '}
