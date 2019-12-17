@@ -266,6 +266,10 @@ export const Page = ({ children }: LayoutProps) => {
             width: calc(100% - 1.5rem);
             padding: 1.5rem;
           }
+
+          [data-reach-dialog-overlay] {
+            overflow-y: scroll;
+          }
         }
       `}</style>
 

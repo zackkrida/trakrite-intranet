@@ -109,7 +109,7 @@ export const OpenJobs = ({
                 <p>Please conform that you want to claim this job.</p>
                 <p>
                   Please note: Once a job is claimed, if you want to remove it,
-                  you will have to be removed by an administrator account.
+                  it will have to be removed by an administrator account.
                 </p>
                 <div>
                   <p>
