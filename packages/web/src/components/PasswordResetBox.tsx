@@ -14,7 +14,7 @@ export const PasswordResetBox = () => {
   }
 
   return (
-    <form style={{ marginTop: '8px' }} action="" onSubmit={handleSubmit}>
+    <form style={{ marginTop: '.6em' }} action="" onSubmit={handleSubmit}>
       <Input
         type="email"
         value={email}

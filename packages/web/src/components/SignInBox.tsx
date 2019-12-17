@@ -69,7 +69,7 @@ export const SignInBox = () => {
   }
 
   return (
-    <form style={{ marginTop: '8px' }} action="" onSubmit={handleSubmit}>
+    <form style={{ marginTop: '.6em' }} action="" onSubmit={handleSubmit}>
       <Stack space="small">
         {message}
         <Input

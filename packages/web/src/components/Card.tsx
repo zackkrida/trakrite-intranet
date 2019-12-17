@@ -16,9 +16,7 @@ export const Card = ({
         margin: 0;
         padding: 0;
         color: rgba(0, 0, 0, 0.65);
-        font-size: 14px;
         font-variant: tabular-nums;
-        line-height: 1.5;
         list-style: none;
         font-feature-settings: 'tnum';
         position: relative;
@@ -26,12 +24,19 @@ export const Card = ({
         border-radius: 2px;
         transition: all 0.3s;
         padding: 20px 24px 16px;
+        line-height: 1.5;
       }
 
       .top-right {
         position: absolute;
         top: 20px;
         right: 16px;
+      }
+
+      @media screen and (max-width: 1000px) {
+        .card {
+          line-height: 1.3;
+        }
       }
     `}</style>
   </div>

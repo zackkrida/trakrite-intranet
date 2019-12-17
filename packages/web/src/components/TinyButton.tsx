@@ -6,20 +6,20 @@ export const TinyButton: React.FC<JSX.IntrinsicElements['button']> = ({
     <span>{children}</span>
     <style jsx>{`
       button {
-        -webkit-appearance: none;
         -moz-appearance: none;
+        -webkit-appearance: none;
         appearance: none;
         background-color: transparent;
-        margin-left: 6px;
-        font-size: 12px;
-        cursor: pointer;
-        padding: 4px;
-        line-height: 1;
-        display: inline-block;
         border-radius: 4px;
         border: 1px solid #e3e3e3;
-        letter-spacing: -0.5px;
         color: #595959;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 0.8em;
+        letter-spacing: -0.5px;
+        line-height: 1;
+        margin-left: 6px;
+        padding: 4px;
       }
 
       button > span {

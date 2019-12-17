@@ -43,9 +43,9 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
                   <svg
                     viewBox="0 0 495.398 495.398"
                     style={{
-                      width: '16px',
-                      height: '16px',
-                      marginRight: '4px',
+                      width: '1.2em',
+                      height: '1.2em',
+                      marginRight: '.4em',
                       fill: '#fff',
                     }}
                   >
@@ -133,10 +133,6 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
           padding: 0 0.5em;
         }
 
-        nav {
-          font-size: 14px;
-        }
-
         header {
           position: sticky;
           top: 0;
@@ -163,13 +159,23 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
             width: 100%;
             background-color: #183a59;
             box-shadow: 0 1px 4px rgba(0, 22, 44, 0.31);
-            padding: 14px 20px;
+          }
+
+          .menu li {
+            flex-grow: 1;
+          }
+
+          .menu a {
+            padding: 1em;
+            display: flex;
+            justify-content: center;
           }
         }
       `}</style>
     </header>
   )
 }
+
 const Main = ({ children }: { children: React.ReactNode }) => (
   <main>
     {children}
@@ -225,6 +231,10 @@ export const Page = ({ children }: LayoutProps) => {
             sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
         }
 
+        body {
+          font-size: 14px;
+        }
+
         a {
           color: inherit;
           display: block;
@@ -242,7 +252,7 @@ export const Page = ({ children }: LayoutProps) => {
         }
 
         h1 {
-          font-size: 1.35rem;
+          font-size: 1.5em;
           letter-spacing: -0.4px;
         }
 
@@ -261,10 +271,15 @@ export const Page = ({ children }: LayoutProps) => {
         }
 
         @media screen and (max-width: 1000px) {
+          body {
+            font-size: 11px;
+          }
+
+          /** Tighten font size and spacing on mobile */
           [data-reach-dialog-content] {
-            margin: 20px auto;
-            width: calc(100% - 1.5rem);
-            padding: 1.5rem;
+            margin: 1.5em auto;
+            width: calc(100% - 1.5em);
+            padding: 1.5em;
           }
 
           [data-reach-dialog-overlay] {

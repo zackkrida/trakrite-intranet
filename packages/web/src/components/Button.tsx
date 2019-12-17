@@ -16,11 +16,8 @@ export const Button: React.FC<ButtonProps> = ({
         color: rgba(0, 0, 0, 0.65);
         cursor: pointer;
         display: inline-block;
-        font-size: 14px;
         font-weight: 400;
-        height: 32px;
-        line-height: 1.5;
-        padding: 0 15px;
+        padding: 0.5em 1em;
         position: relative;
         text-align: center;
         touch-action: manipulation;

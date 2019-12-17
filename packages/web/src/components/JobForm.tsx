@@ -134,11 +134,11 @@ export const JobForm = ({
         />
 
         <label style={{ display: 'block' }} htmlFor="payStatus">
-          <span style={{ display: 'block', marginBottom: '6px' }}>
+          <span style={{ display: 'block', marginBottom: '.8em' }}>
             Payment Status
           </span>
           <select
-            style={{ width: '100%', display: 'block', padding: '10px' }}
+            style={{ width: '100%', display: 'block', padding: '.8em' }}
             name="payStatus"
             value={paymentStatus}
             onChange={event =>

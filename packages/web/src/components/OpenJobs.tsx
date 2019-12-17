@@ -58,15 +58,15 @@ export const OpenJobs = ({
                 style={{
                   display: 'flex',
                   alignItems: 'baseline',
-                  padding: '4px 12px',
-                  margin: '0 -12px',
+                  padding: '4px .8em',
+                  margin: '0 -.8em',
                   borderBottom: '1px solid #e3e3e3',
                 }}
               >
                 <span
                   style={{
                     fontFamily: 'monospaced, monospace, sans-serif',
-                    fontSize: '11px',
+                    fontSize: '.8em',
                     fontWeight: 'bold',
                     letterSpacing: '-.25px',
                     marginRight: '1em',
