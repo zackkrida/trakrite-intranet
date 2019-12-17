@@ -1,9 +1,10 @@
 export const Button: React.FC<ButtonProps> = ({
   theme = 'NEUTRAL',
+  type = 'button',
   children,
   ...props
 }) => (
-  <button {...props} className={theme}>
+  <button {...props} type={type} className={theme}>
     {children}
     <style jsx>{`
       button {
