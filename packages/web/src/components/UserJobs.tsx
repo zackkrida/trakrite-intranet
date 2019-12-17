@@ -97,7 +97,11 @@ export const UserJobs = ({
           {jobs.slice(0, limit).map(job => (
             <Item
               key={job.id}
-              title={job.name}
+              title={
+                <Link href={`/job/${job.id}`}>
+                  <a>{job.name}</a>
+                </Link>
+              }
               subtitle={job.customerName}
               right={date(job.recievedOn)}
               actions={
