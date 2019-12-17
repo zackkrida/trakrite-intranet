@@ -262,6 +262,7 @@ export const Page = ({ children }: LayoutProps) => {
 
         @media screen and (max-width: 1000px) {
           [data-reach-dialog-content] {
+            margin: 20px auto;
             width: calc(100% - 1.5rem);
             padding: 1.5rem;
           }
