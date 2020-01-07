@@ -22,11 +22,17 @@ export const JobForm = ({
 }) => {
   // Form fields
   const [name, setName] = useState('')
-  const [customerName, setCustomerName] = useState('')
-  const [customerPhone, setCustomerPhone] = useState('')
-  const [customerEmail, setCustomerEmail] = useState('')
-  const [customerAddress, setCustomerAddress] = useState('')
-  const [jobAddress, setJobAddress] = useState('')
+  const [customerName, setCustomerName] = useState(job ? job.customerName : '')
+  const [customerPhone, setCustomerPhone] = useState(
+    job ? job.customerPhone : ''
+  )
+  const [customerEmail, setCustomerEmail] = useState(
+    job ? job.customerEmail : ''
+  )
+  const [customerAddress, setCustomerAddress] = useState(
+    job ? job.customerAddress : ''
+  )
+  const [jobAddress, setJobAddress] = useState(job ? job.jobAddress : '')
 
   const [recievedOn, setRecievedOn] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [notes, setNotes] = useState(job ? job.notes : '')
