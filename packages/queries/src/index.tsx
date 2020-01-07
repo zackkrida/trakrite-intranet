@@ -299,8 +299,12 @@ export type IntFilter = {
 export type Job = {
    __typename: 'Job',
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerAddress?: Maybe<Scalars['String']>,
+  customerEmail?: Maybe<Scalars['String']>,
   customerName?: Maybe<Scalars['String']>,
+  customerPhone?: Maybe<Scalars['String']>,
   id: Scalars['UUID'],
+  jobAddress?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus: PayStatus,
@@ -316,10 +320,18 @@ export type Job = {
 export type JobCondition = {
   /** Checks for equality with the object’s `createdAt` field. */
   createdAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `customerAddress` field. */
+  customerAddress?: Maybe<Scalars['String']>,
+  /** Checks for equality with the object’s `customerEmail` field. */
+  customerEmail?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `customerName` field. */
   customerName?: Maybe<Scalars['String']>,
+  /** Checks for equality with the object’s `customerPhone` field. */
+  customerPhone?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `id` field. */
   id?: Maybe<Scalars['UUID']>,
+  /** Checks for equality with the object’s `jobAddress` field. */
+  jobAddress?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `name` field. */
   name?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `notes` field. */
@@ -342,10 +354,18 @@ export type JobFilter = {
   and?: Maybe<Array<JobFilter>>,
   /** Filter by the object’s `createdAt` field. */
   createdAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `customerAddress` field. */
+  customerAddress?: Maybe<StringFilter>,
+  /** Filter by the object’s `customerEmail` field. */
+  customerEmail?: Maybe<StringFilter>,
   /** Filter by the object’s `customerName` field. */
   customerName?: Maybe<StringFilter>,
+  /** Filter by the object’s `customerPhone` field. */
+  customerPhone?: Maybe<StringFilter>,
   /** Filter by the object’s `id` field. */
   id?: Maybe<UuidFilter>,
+  /** Filter by the object’s `jobAddress` field. */
+  jobAddress?: Maybe<StringFilter>,
   /** Filter by the object’s `name` field. */
   name?: Maybe<StringFilter>,
   /** Negates the expression. */
@@ -373,8 +393,12 @@ export type JobFilter = {
 /** An input for mutations affecting `Job` */
 export type JobInput = {
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerAddress?: Maybe<Scalars['String']>,
+  customerEmail?: Maybe<Scalars['String']>,
   customerName?: Maybe<Scalars['String']>,
+  customerPhone?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['UUID']>,
+  jobAddress?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus?: Maybe<PayStatus>,
@@ -387,8 +411,12 @@ export type JobInput = {
 /** Represents an update to a `Job`. Fields that are set will be updated. */
 export type JobPatch = {
   createdAt?: Maybe<Scalars['Datetime']>,
+  customerAddress?: Maybe<Scalars['String']>,
+  customerEmail?: Maybe<Scalars['String']>,
   customerName?: Maybe<Scalars['String']>,
+  customerPhone?: Maybe<Scalars['String']>,
   id?: Maybe<Scalars['UUID']>,
+  jobAddress?: Maybe<Scalars['String']>,
   name?: Maybe<Scalars['String']>,
   notes?: Maybe<Scalars['String']>,
   paymentStatus?: Maybe<PayStatus>,
@@ -424,10 +452,18 @@ export type JobsEdge = {
 export enum JobsOrderBy {
   CreatedAtAsc = 'CREATED_AT_ASC',
   CreatedAtDesc = 'CREATED_AT_DESC',
+  CustomerAddressAsc = 'CUSTOMER_ADDRESS_ASC',
+  CustomerAddressDesc = 'CUSTOMER_ADDRESS_DESC',
+  CustomerEmailAsc = 'CUSTOMER_EMAIL_ASC',
+  CustomerEmailDesc = 'CUSTOMER_EMAIL_DESC',
   CustomerNameAsc = 'CUSTOMER_NAME_ASC',
   CustomerNameDesc = 'CUSTOMER_NAME_DESC',
+  CustomerPhoneAsc = 'CUSTOMER_PHONE_ASC',
+  CustomerPhoneDesc = 'CUSTOMER_PHONE_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
+  JobAddressAsc = 'JOB_ADDRESS_ASC',
+  JobAddressDesc = 'JOB_ADDRESS_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
@@ -1267,7 +1303,7 @@ export type UuidFilter = {
 
 export type JobInfoFragment = (
   { __typename: 'Job' }
-  & Pick<Job, 'name' | 'customerName' | 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt' | 'userId'>
+  & Pick<Job, 'name' | 'customerName' | 'customerPhone' | 'customerEmail' | 'customerAddress' | 'jobAddress' | 'createdAt' | 'id' | 'notes' | 'paymentStatus' | 'progress' | 'recievedOn' | 'updatedAt' | 'userId'>
   & { user: Maybe<(
     { __typename: 'User' }
     & UserInfoFragment
@@ -1616,6 +1652,10 @@ export const JobInfoFragmentDoc = gql`
     fragment JobInfo on Job {
   name
   customerName
+  customerPhone
+  customerEmail
+  customerAddress
+  jobAddress
   createdAt
   id
   notes

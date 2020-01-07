@@ -1,6 +1,10 @@
 fragment JobInfo on Job {
   name
   customerName
+  customerPhone
+  customerEmail
+  customerAddress
+  jobAddress
   createdAt
   id
   notes

@@ -337,8 +337,12 @@ input IntFilter {
 
 type Job {
   createdAt: Datetime
+  customerAddress: String
+  customerEmail: String
   customerName: String
+  customerPhone: String
   id: UUID!
+  jobAddress: String
   name: String
   notes: String
   paymentStatus: PayStatus!
@@ -358,11 +362,23 @@ input JobCondition {
   """Checks for equality with the object’s `createdAt` field."""
   createdAt: Datetime
 
+  """Checks for equality with the object’s `customerAddress` field."""
+  customerAddress: String
+
+  """Checks for equality with the object’s `customerEmail` field."""
+  customerEmail: String
+
   """Checks for equality with the object’s `customerName` field."""
   customerName: String
 
+  """Checks for equality with the object’s `customerPhone` field."""
+  customerPhone: String
+
   """Checks for equality with the object’s `id` field."""
   id: UUID
+
+  """Checks for equality with the object’s `jobAddress` field."""
+  jobAddress: String
 
   """Checks for equality with the object’s `name` field."""
   name: String
@@ -396,11 +412,23 @@ input JobFilter {
   """Filter by the object’s `createdAt` field."""
   createdAt: DatetimeFilter
 
+  """Filter by the object’s `customerAddress` field."""
+  customerAddress: StringFilter
+
+  """Filter by the object’s `customerEmail` field."""
+  customerEmail: StringFilter
+
   """Filter by the object’s `customerName` field."""
   customerName: StringFilter
 
+  """Filter by the object’s `customerPhone` field."""
+  customerPhone: StringFilter
+
   """Filter by the object’s `id` field."""
   id: UUIDFilter
+
+  """Filter by the object’s `jobAddress` field."""
+  jobAddress: StringFilter
 
   """Filter by the object’s `name` field."""
   name: StringFilter
@@ -439,8 +467,12 @@ input JobFilter {
 """An input for mutations affecting `Job`"""
 input JobInput {
   createdAt: Datetime
+  customerAddress: String
+  customerEmail: String
   customerName: String
+  customerPhone: String
   id: UUID
+  jobAddress: String
   name: String
   notes: String
   paymentStatus: PayStatus
@@ -453,8 +485,12 @@ input JobInput {
 """Represents an update to a `Job`. Fields that are set will be updated."""
 input JobPatch {
   createdAt: Datetime
+  customerAddress: String
+  customerEmail: String
   customerName: String
+  customerPhone: String
   id: UUID
+  jobAddress: String
   name: String
   notes: String
   paymentStatus: PayStatus
@@ -494,10 +530,18 @@ type JobsEdge {
 enum JobsOrderBy {
   CREATED_AT_ASC
   CREATED_AT_DESC
+  CUSTOMER_ADDRESS_ASC
+  CUSTOMER_ADDRESS_DESC
+  CUSTOMER_EMAIL_ASC
+  CUSTOMER_EMAIL_DESC
   CUSTOMER_NAME_ASC
   CUSTOMER_NAME_DESC
+  CUSTOMER_PHONE_ASC
+  CUSTOMER_PHONE_DESC
   ID_ASC
   ID_DESC
+  JOB_ADDRESS_ASC
+  JOB_ADDRESS_DESC
   NAME_ASC
   NAME_DESC
   NATURAL

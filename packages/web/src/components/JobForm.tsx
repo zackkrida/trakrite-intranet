@@ -23,6 +23,11 @@ export const JobForm = ({
   // Form fields
   const [name, setName] = useState('')
   const [customerName, setCustomerName] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [customerAddress, setCustomerAddress] = useState('')
+  const [jobAddress, setJobAddress] = useState('')
+
   const [recievedOn, setRecievedOn] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [notes, setNotes] = useState(job ? job.notes : '')
   const [paymentStatus, setPaymentStatus] = useState<PayStatus>(
@@ -71,6 +76,10 @@ export const JobForm = ({
           job: {
             name,
             customerName,
+            customerPhone,
+            customerEmail,
+            customerAddress,
+            jobAddress,
             recievedOn,
             notes,
             paymentStatus,
@@ -93,42 +102,47 @@ export const JobForm = ({
   return (
     <form action="" onSubmit={job ? handleEdit : handleCreate}>
       <Stack space="small">
-        {job && (
-          <div>
-            <strong>Job Name: </strong>
-            {job.name}
-            <br />
-            <strong>Customer: </strong>
-            {job.customerName}
-          </div>
-        )}
-
-        {!job && (
-          <Input
-            label="Job Name/Description"
-            value={name}
-            onChange={event => setName(event.currentTarget.value)}
-          />
-        )}
-        {!job && (
-          <Input
-            label="Customer Name"
-            value={customerName}
-            onChange={event => setCustomerName(event.currentTarget.value)}
-          />
-        )}
-        {!job && (
-          <Input
-            label="Recieved Date"
-            name="date"
-            value={recievedOn}
-            onChange={event => setRecievedOn(event.target.value)}
-            type="date"
-          />
-        )}
+        <Input
+          label="Job Name/Description"
+          value={name}
+          onChange={event => setName(event.currentTarget.value)}
+        />
+        <Input
+          label="Customer Name"
+          value={customerName}
+          onChange={event => setCustomerName(event.currentTarget.value)}
+        />
+        <Input
+          label="Customer Phone"
+          value={customerPhone}
+          onChange={event => setCustomerPhone(event.target.value)}
+        />
+        <Input
+          label="Customer Email"
+          value={customerEmail}
+          onChange={event => setCustomerEmail(event.target.value)}
+        />
+        <Input
+          label="Customer Billing Address"
+          value={customerAddress}
+          onChange={event => setCustomerAddress(event.target.value)}
+        />
+        <Input
+          label="Job Address"
+          value={jobAddress}
+          onChange={event => setJobAddress(event.target.value)}
+        />
 
         <Input
-          label="Notes"
+          label="Recieved Date"
+          name="date"
+          value={recievedOn}
+          onChange={event => setRecievedOn(event.target.value)}
+          type="date"
+        />
+
+        <Input
+          label="Notes / Job Description"
           value={notes}
           onChange={event => setNotes(event.currentTarget.value)}
         />
@@ -156,7 +170,7 @@ export const JobForm = ({
         </label>
 
         <Input
-          label="Progress"
+          label="Progress Details"
           value={progress}
           onChange={event => setProgress(event.currentTarget.value)}
         />
