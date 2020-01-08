@@ -236,6 +236,10 @@ export const Page = ({ children }: LayoutProps) => {
           letter-spacing: -0.4px;
         }
 
+        h3 {
+          font-size: 1.1em;
+        }
+
         ul {
           list-style: none;
         }

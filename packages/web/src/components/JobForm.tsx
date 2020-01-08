@@ -21,7 +21,7 @@ export const JobForm = ({
   onComplete: () => void
 }) => {
   // Form fields
-  const [name, setName] = useState('')
+  const [name, setName] = useState(job ? job.name : '')
   const [customerName, setCustomerName] = useState(job ? job.customerName : '')
   const [customerPhone, setCustomerPhone] = useState(
     job ? job.customerPhone : ''
@@ -55,6 +55,13 @@ export const JobForm = ({
         variables: {
           id: job.id,
           patch: {
+            name,
+            customerName,
+            customerPhone,
+            customerEmail,
+            customerAddress,
+            jobAddress,
+            recievedOn,
             notes,
             paymentStatus,
             progress,

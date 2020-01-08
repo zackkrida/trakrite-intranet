@@ -43,13 +43,22 @@ export const JobList = ({
             key={job.id}
             title={
               <Link href={`/job/${job.id}`}>
-                <a>{job.name}</a>
+                <a>
+                  <span>{job.name}</span>
+                </a>
               </Link>
             }
-            subtitle={job.customerName}
+            subtitle={
+              <>
+                Customer: {job.customerName}
+                <br /> <span>Address: {job.jobAddress}</span>
+              </>
+            }
             right={
               <>
-                {date(job.recievedOn)}
+                <span>Pay Status: {job.paymentStatus}</span>
+                <br />
+                Received: {date(job.recievedOn)}
                 <div style={{ display: 'block', marginTop: '6px' }}>
                   {!job.userId ? (
                     <TinyButton onClick={() => setAssigningUser(job)}>

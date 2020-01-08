@@ -41,30 +41,50 @@ const Job = () => {
               )}
             </Dialog>
             <h1>{job.name}</h1>
+
             <div>
               <p>
-                <strong>For Customer:</strong> {job.customerName}
-              </p>
-              <p>
-                <strong>Recieved On:</strong> {date(job.recievedOn)}
-              </p>
-            </div>
-            <hr />
-            <div>
-              <p>
-                <strong>Notes: </strong>
+                <strong>Notes / Job Description: </strong>
                 {job.notes}
+              </p>
+              <p>
+                <strong>Address:</strong>
+                {job.jobAddress}
               </p>
               <p>
                 <strong>Payment Status:</strong> {job.paymentStatus}
               </p>
               <p>
-                <strong>
-                  <strong>Progress:</strong>{' '}
-                </strong>
-                {job.progress}
+                <strong>Progress Details:</strong> {job.progress}
+              </p>
+              <p>
+                <strong>Recieved On:</strong> {date(job.recievedOn)}
               </p>
             </div>
+
+            <hr />
+
+            <Stack space="small">
+              <h3>Customer Info</h3>
+              <div>
+                <p>
+                  <strong>Name: </strong>
+                  {job.customerName}
+                </p>
+                <p>
+                  <strong>Email: </strong>
+                  {job.customerEmail}
+                </p>
+                <p>
+                  <strong>Phone: </strong>
+                  {job.customerPhone}
+                </p>
+                <p>
+                  <strong>Billing Address: </strong>
+                  {job.customerAddress}
+                </p>
+              </div>
+            </Stack>
           </Stack>
         </Card>
       </CardSet>
