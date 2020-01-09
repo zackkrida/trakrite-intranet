@@ -269,6 +269,7 @@ export const Page = ({ children }: LayoutProps) => {
           }
 
           [data-reach-dialog-overlay] {
+            height: 100%;
             overflow-y: scroll;
           }
         }
