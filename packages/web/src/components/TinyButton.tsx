@@ -15,7 +15,7 @@ export const TinyButton: React.FC<JSX.IntrinsicElements['button']> = ({
         color: #595959;
         cursor: pointer;
         display: inline-block;
-        font-size: 0.8em;
+        font-size: 0.9em;
         letter-spacing: -0.5px;
         line-height: 1;
         margin-left: 6px;

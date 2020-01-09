@@ -8,6 +8,7 @@ export const Button: React.FC<ButtonProps> = ({
     {children}
     <style jsx>{`
       button {
+        font-size: 16px;
         user-select: none;
         background-image: none;
         border-radius: 4px;
