@@ -27,7 +27,6 @@ export const Item = ({
             style={{
               display: 'block',
               fontWeight: 'normal',
-              fontSize: '.9em',
               color: 'rgba(0,0,0,0.65)',
             }}
           >
@@ -41,7 +40,6 @@ export const Item = ({
         textAlign: 'right',
         display: 'flex',
         alignItems: 'center',
-        fontSize: '.9em',
       }}
     >
       {right && <div>{right}</div>}
