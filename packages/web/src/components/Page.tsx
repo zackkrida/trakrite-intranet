@@ -255,12 +255,9 @@ export const Page = ({ children }: LayoutProps) => {
         }
 
         @media screen and (max-width: 1000px) {
-          body {
-            font-size: 12.5px;
-          }
-
           /** Tighten font size and spacing on mobile */
           [data-reach-dialog-content] {
+            font-size: 16px;
             margin: 1.5em auto;
             width: calc(100% - 1.5em);
             padding: 1.5em;
