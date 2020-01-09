@@ -21,6 +21,12 @@ export const Input: React.FC<InputProps> = ({ label, ...rest }) => (
         border: 1px solid #e3e3e3;
       }
 
+      @media screen and max-width(900px) {
+        input {
+          font-size: 16px;
+        }
+      }
+
       input:hover {
         border-color: #40a9ff;
       }

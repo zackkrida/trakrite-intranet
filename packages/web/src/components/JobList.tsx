@@ -58,7 +58,6 @@ export const JobList = ({
               <>
                 <span>Pay Status: {job.paymentStatus}</span>
                 <br />
-                Received: {date(job.recievedOn)}
                 <div style={{ display: 'block', marginTop: '6px' }}>
                   {!job.userId ? (
                     <TinyButton onClick={() => setAssigningUser(job)}>

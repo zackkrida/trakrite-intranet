@@ -256,7 +256,7 @@ export const Page = ({ children }: LayoutProps) => {
 
         @media screen and (max-width: 1000px) {
           body {
-            font-size: 11px;
+            font-size: 12.5px;
           }
 
           /** Tighten font size and spacing on mobile */
