@@ -188,6 +188,11 @@ export const Page = ({ children }: LayoutProps) => {
     <div className="app">
       <Head>
         <link key="manifest" rel="manifest" href="/manifest.json"></link>
+        <meta
+          name="viewport"
+          key="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        ></meta>
       </Head>
       <Header currentUser={currentUser} />
       <Main>
