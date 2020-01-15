@@ -10,14 +10,27 @@ import { Stack } from './Stack'
 import { UserJobs } from './UserJobs'
 import { UserMiles } from './UserMiles'
 import { UserInfoCard } from './UserInfoCard'
+import { Button } from './Button'
+import { JobList } from './JobList'
+import Dialog from '@reach/dialog'
+import { JobForm } from './JobForm'
+import { useState } from 'react'
 
 export const UserView = ({
   user,
 }: {
   user: UserInfoFragment & UserMilesFragment & UserJobsFragment
 }) => {
+  const [addingJob, setAddingJob] = useState(false)
+
   return (
     <div className="boxWrap">
+      <Dialog isOpen={addingJob} onDismiss={() => setAddingJob(false)}>
+        <Stack space="small">
+          <h1>Add job</h1>
+          <JobForm onComplete={() => setAddingJob(false)} />
+        </Stack>
+      </Dialog>
       <UserInfoCard user={user} />
       <Card>
         <Stack space="small">
@@ -29,7 +42,13 @@ export const UserView = ({
           <OpenJobs user={user} limit={5} />
         </Stack>
       </Card>
-      <Card>
+      <Card
+        topRight={
+          <Button theme="PRIMARY" onClick={() => setAddingJob(true)}>
+            Add Job
+          </Button>
+        }
+      >
         <Stack space="small">
           <h1>
             <Link href="/jobs">

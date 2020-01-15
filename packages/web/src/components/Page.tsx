@@ -62,13 +62,18 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
             {currentUser.isAdmin === false && (
               <>
                 <li>
-                  <Link href="/jobs">
+                  <Link href="/my-jobs">
                     <a>My Jobs</a>
                   </Link>
                 </li>
                 <li>
+                  <Link href="/jobs">
+                    <a>Jobs</a>
+                  </Link>
+                </li>
+                <li>
                   <Link href="/open-jobs">
-                    <a>Find Jobs</a>
+                    <a>Open Jobs</a>
                   </Link>
                 </li>
                 <li>
