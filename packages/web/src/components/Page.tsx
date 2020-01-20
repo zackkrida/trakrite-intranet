@@ -62,18 +62,8 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
             {currentUser.isAdmin === false && (
               <>
                 <li>
-                  <Link href="/my-jobs">
-                    <a>My Jobs</a>
-                  </Link>
-                </li>
-                <li>
                   <Link href="/jobs">
                     <a>Jobs</a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/open-jobs">
-                    <a>Open Jobs</a>
                   </Link>
                 </li>
                 <li>
@@ -147,7 +137,7 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
           }
 
           .menu li {
-            flex-grow: 1;
+            flex: 1;
           }
 
           .menu a {
