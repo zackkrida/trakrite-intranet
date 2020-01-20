@@ -99,19 +99,33 @@ export const UserJobs = ({
               key={job.id}
               title={
                 <Link href={`/job/${job.id}`}>
-                  <a>{job.name}</a>
+                  <a>
+                    <span>{job.name}</span>
+                  </a>
                 </Link>
               }
-              subtitle={job.customerName}
-              right={date(job.recievedOn)}
-              actions={
+              subtitle={
                 <>
-                  <TinyButton onClick={() => setEditing(job)}>Edit</TinyButton>
-                  {showUnassign && (
-                    <TinyButton onClick={() => setRemoving(job)}>
-                      Unassign
-                    </TinyButton>
-                  )}
+                  Customer: {job.customerName}
+                  <br /> <span>Address: {job.jobAddress}</span>
+                </>
+              }
+              right={
+                <>
+                  <span>Pay Status: {job.paymentStatus}</span>
+                  <br />
+                  <div style={{ display: 'block', marginTop: '6px' }}>
+                    <>
+                      <TinyButton onClick={() => setEditing(job)}>
+                        Edit
+                      </TinyButton>
+                      {showUnassign && (
+                        <TinyButton onClick={() => setRemoving(job)}>
+                          Unassign
+                        </TinyButton>
+                      )}
+                    </>
+                  </div>
                 </>
               }
             />

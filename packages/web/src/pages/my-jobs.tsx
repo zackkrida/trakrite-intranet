@@ -31,7 +31,7 @@ const Jobs = () => {
                   <JobForm onComplete={() => setAddingJob(false)} />
                 </Stack>
               </Dialog>
-              <UserJobs user={currentUser} />
+              <UserJobs user={currentUser} showUnassign={true} />
             </Stack>
           </Card>
         ) : null

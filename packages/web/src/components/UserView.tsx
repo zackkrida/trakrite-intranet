@@ -14,6 +14,7 @@ import { Button } from './Button'
 import Dialog from '@reach/dialog'
 import { JobForm } from './JobForm'
 import { useState } from 'react'
+import { JobList } from './JobList'
 
 export const UserView = ({
   user,
@@ -50,13 +51,31 @@ export const UserView = ({
       >
         <Stack space="small">
           <h1>
-            <Link href="/jobs">
+            <Link href="/my-jobs">
               <a>My Jobs</a>
             </Link>
           </h1>
           <UserJobs user={user} limit={5} />
         </Stack>
       </Card>
+
+      <Card
+        topRight={
+          <Button theme="PRIMARY" onClick={() => setAddingJob(true)}>
+            Add Job
+          </Button>
+        }
+      >
+        <Stack space="small">
+          <h1>
+            <Link href="/jobs">
+              <a>All Jobs</a>
+            </Link>
+          </h1>
+          <JobList limit={5} />
+        </Stack>
+      </Card>
+
       <Card>
         <Stack space="small">
           <h1>
