@@ -20,7 +20,7 @@ export const PasswordResetBox = () => {
         value={email}
         onChange={event => setEmail(event.currentTarget.value)}
         name="Email"
-        label="Email"
+        label="Email or Username"
       />
       <Input
         type="email"

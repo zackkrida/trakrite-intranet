@@ -70,7 +70,7 @@ export const UserForm = ({
         />
         <Input
           type="email"
-          label="Email Address"
+          label="Email or Username"
           value={email}
           onChange={event => setEmail(event.currentTarget.value)}
         />

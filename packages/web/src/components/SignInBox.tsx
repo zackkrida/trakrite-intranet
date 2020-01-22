@@ -75,7 +75,7 @@ export const SignInBox = () => {
         <Input
           type="text"
           name="Email"
-          label="Email"
+          label="Email or Username"
           value={email}
           onChange={event => setEmail(event.currentTarget.value)}
         />
