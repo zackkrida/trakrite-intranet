@@ -49,7 +49,7 @@ comment on column public.user.is_admin is 'A boolean for admin status';
 -- The user account details, contained in a privately scoped schema
 create table trakrite_private.user_account (
   user_id        uuid primary key references public.user(id) on delete cascade,
-  email          text not null unique check (email ~* '^.+@.+\..+$'),
+  email          text not null unique,
   password_hash  text not null
 );
 

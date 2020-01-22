@@ -69,7 +69,6 @@ export const UserForm = ({
           onChange={event => setJobTitle(event.currentTarget.value)}
         />
         <Input
-          type="email"
           label="Email or Username"
           value={email}
           onChange={event => setEmail(event.currentTarget.value)}

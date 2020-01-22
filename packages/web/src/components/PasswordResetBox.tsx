@@ -16,7 +16,6 @@ export const PasswordResetBox = () => {
   return (
     <form style={{ marginTop: '.6em' }} action="" onSubmit={handleSubmit}>
       <Input
-        type="email"
         value={email}
         onChange={event => setEmail(event.currentTarget.value)}
         name="Email"

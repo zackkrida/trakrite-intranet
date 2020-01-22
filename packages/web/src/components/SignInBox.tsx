@@ -73,7 +73,6 @@ export const SignInBox = () => {
       <Stack space="small">
         {message}
         <Input
-          type="text"
           name="Email"
           label="Email or Username"
           value={email}
