@@ -2,6 +2,7 @@ import {
   UserInfoFragment,
   UserJobsFragment,
   UserMilesFragment,
+  UserHoursFragment,
 } from '@trakrite/queries'
 import Link from 'next/link'
 import { Card } from './Card'
@@ -15,12 +16,10 @@ import Dialog from '@reach/dialog'
 import { JobForm } from './JobForm'
 import { useState } from 'react'
 import { JobList } from './JobList'
+import { UserHours } from './UserHours'
+import { AppUser } from '../../types'
 
-export const UserView = ({
-  user,
-}: {
-  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
-}) => {
+export const UserView = ({ user }: { user: AppUser }) => {
   const [addingJob, setAddingJob] = useState(false)
 
   return (
@@ -84,6 +83,16 @@ export const UserView = ({
             </Link>
           </h1>
           <UserMiles user={user} limit={5} />
+        </Stack>
+      </Card>
+      <Card>
+        <Stack space="small">
+          <h1>
+            <Link href="/hours">
+              <a>My Hours</a>
+            </Link>
+          </h1>
+          <UserHours user={user} limit={5} />
         </Stack>
       </Card>
       <style jsx>{`

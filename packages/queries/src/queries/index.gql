@@ -28,10 +28,28 @@ fragment MileInfo on Mile {
   userId
 }
 
+fragment HourInfo on Hour {
+  createdAt
+  date
+  duration
+  id
+  info
+  updatedAt
+  userId
+}
+
 fragment UserMiles on User {
   miles {
     nodes {
       ...MileInfo
+    }
+  }
+}
+
+fragment UserHours on User {
+  hours {
+    nodes {
+      ...HourInfo
     }
   }
 }
@@ -65,6 +83,7 @@ query CurrentUser {
   currentUser {
     ...UserInfo
     ...UserMiles
+    ...UserHours
     ...UserJobs
   }
 }
@@ -73,15 +92,17 @@ query User($id: UUID!) {
   user(id: $id) {
     ...UserInfo
     ...UserMiles
+    ...UserHours
     ...UserJobs
   }
 }
 
 query Users {
-  users {
+  users(condition: { isHidden: false }) {
     nodes {
       ...UserInfo
       ...UserMiles
+      ...UserHours
       ...UserJobs
     }
   }
@@ -114,6 +135,29 @@ mutation deleteMile($id: UUID!) {
   deleteMile(input: { id: $id }) {
     mile {
       ...MileInfo
+    }
+  }
+}
+mutation addHour($hour: HourInput!) {
+  createHour(input: { hour: $hour }) {
+    hour {
+      ...HourInfo
+    }
+  }
+}
+
+mutation editHour($id: UUID!, $patch: HourPatch!) {
+  updateHour(input: { patch: $patch, id: $id }) {
+    hour {
+      ...HourInfo
+    }
+  }
+}
+
+mutation deleteHour($id: UUID!) {
+  deleteHour(input: { id: $id }) {
+    hour {
+      ...HourInfo
     }
   }
 }

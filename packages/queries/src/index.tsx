@@ -17,10 +17,10 @@ export type Scalars = {
    * 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
  */
   Datetime: any,
-  /** A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122). */
-  UUID: any,
   /** A location in a connection that can be used for resuming pagination. */
   Cursor: any,
+  /** A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122). */
+  UUID: any,
   /** 
  * A JSON Web Token defined by [RFC 7519](https://tools.ietf.org/html/rfc7519)
    * which securely represents claims between two parties.
@@ -100,6 +100,41 @@ export type BooleanFilter = {
   notEqualTo?: Maybe<Scalars['Boolean']>,
   /** Not included in the specified list. */
   notIn?: Maybe<Array<Scalars['Boolean']>>,
+};
+
+/** All input for the create `Hour` mutation. */
+export type CreateHourInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Hour` to be created by this mutation. */
+  hour: HourInput,
+};
+
+/** The output of our create `Hour` mutation. */
+export type CreateHourPayload = {
+   __typename: 'CreateHourPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Hour` that was created by this mutation. */
+  hour?: Maybe<Hour>,
+  /** An edge for our `Hour`. May be used by Relay 1. */
+  hourEdge?: Maybe<HoursEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Hour`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our create `Hour` mutation. */
+export type CreateHourPayloadHourEdgeArgs = {
+  orderBy?: Maybe<Array<HoursOrderBy>>
 };
 
 /** All input for the create `Job` mutation. */
@@ -200,6 +235,41 @@ export type DatetimeFilter = {
   notIn?: Maybe<Array<Scalars['Datetime']>>,
 };
 
+/** All input for the `deleteHour` mutation. */
+export type DeleteHourInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  id: Scalars['UUID'],
+};
+
+/** The output of our delete `Hour` mutation. */
+export type DeleteHourPayload = {
+   __typename: 'DeleteHourPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  deletedHourNodeId?: Maybe<Scalars['ID']>,
+  /** The `Hour` that was deleted by this mutation. */
+  hour?: Maybe<Hour>,
+  /** An edge for our `Hour`. May be used by Relay 1. */
+  hourEdge?: Maybe<HoursEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Hour`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our delete `Hour` mutation. */
+export type DeleteHourPayloadHourEdgeArgs = {
+  orderBy?: Maybe<Array<HoursOrderBy>>
+};
+
 /** All input for the `deleteJob` mutation. */
 export type DeleteJobInput = {
   /** 
@@ -269,6 +339,130 @@ export type DeleteMilePayload = {
 export type DeleteMilePayloadMileEdgeArgs = {
   orderBy?: Maybe<Array<MilesOrderBy>>
 };
+
+export type Hour = {
+   __typename: 'Hour',
+  createdAt?: Maybe<Scalars['Datetime']>,
+  date: Scalars['Datetime'],
+  duration: Scalars['Int'],
+  id: Scalars['UUID'],
+  info: Scalars['String'],
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  /** Reads a single `User` that is related to this `Hour`. */
+  user?: Maybe<User>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A condition to be used against `Hour` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type HourCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `date` field. */
+  date?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `duration` field. */
+  duration?: Maybe<Scalars['Int']>,
+  /** Checks for equality with the object’s `id` field. */
+  id?: Maybe<Scalars['UUID']>,
+  /** Checks for equality with the object’s `info` field. */
+  info?: Maybe<Scalars['String']>,
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A filter to be used against `Hour` object types. All fields are combined with a logical ‘and.’ */
+export type HourFilter = {
+  /** Checks for all expressions in this list. */
+  and?: Maybe<Array<HourFilter>>,
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `date` field. */
+  date?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `duration` field. */
+  duration?: Maybe<IntFilter>,
+  /** Filter by the object’s `id` field. */
+  id?: Maybe<UuidFilter>,
+  /** Filter by the object’s `info` field. */
+  info?: Maybe<StringFilter>,
+  /** Negates the expression. */
+  not?: Maybe<HourFilter>,
+  /** Checks for any expressions in this list. */
+  or?: Maybe<Array<HourFilter>>,
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: Maybe<DatetimeFilter>,
+  /** Filter by the object’s `user` relation. */
+  user?: Maybe<UserFilter>,
+  /** A related `user` exists. */
+  userExists?: Maybe<Scalars['Boolean']>,
+  /** Filter by the object’s `userId` field. */
+  userId?: Maybe<UuidFilter>,
+};
+
+/** An input for mutations affecting `Hour` */
+export type HourInput = {
+  createdAt?: Maybe<Scalars['Datetime']>,
+  date?: Maybe<Scalars['Datetime']>,
+  duration: Scalars['Int'],
+  id?: Maybe<Scalars['UUID']>,
+  info: Scalars['String'],
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** Represents an update to a `Hour`. Fields that are set will be updated. */
+export type HourPatch = {
+  createdAt?: Maybe<Scalars['Datetime']>,
+  date?: Maybe<Scalars['Datetime']>,
+  duration?: Maybe<Scalars['Int']>,
+  id?: Maybe<Scalars['UUID']>,
+  info?: Maybe<Scalars['String']>,
+  updatedAt?: Maybe<Scalars['Datetime']>,
+  userId?: Maybe<Scalars['UUID']>,
+};
+
+/** A connection to a list of `Hour` values. */
+export type HoursConnection = {
+   __typename: 'HoursConnection',
+  /** A list of edges which contains the `Hour` and cursor to aid in pagination. */
+  edges: Array<HoursEdge>,
+  /** A list of `Hour` objects. */
+  nodes: Array<Hour>,
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo,
+  /** The count of *all* `Hour` you could get from the connection. */
+  totalCount: Scalars['Int'],
+};
+
+/** A `Hour` edge in the connection. */
+export type HoursEdge = {
+   __typename: 'HoursEdge',
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']>,
+  /** The `Hour` at the end of the edge. */
+  node: Hour,
+};
+
+/** Methods to use when ordering `Hour`. */
+export enum HoursOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DateAsc = 'DATE_ASC',
+  DateDesc = 'DATE_DESC',
+  DurationAsc = 'DURATION_ASC',
+  DurationDesc = 'DURATION_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  InfoAsc = 'INFO_ASC',
+  InfoDesc = 'INFO_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
 export type IntFilter = {
@@ -614,10 +808,14 @@ export type Mutation = {
   assignJobs?: Maybe<AssignJobsPayload>,
   /** Creates a JWT token that will securely identify a user and give them certain permissions. */
   authenticate?: Maybe<AuthenticatePayload>,
+  /** Creates a single `Hour`. */
+  createHour?: Maybe<CreateHourPayload>,
   /** Creates a single `Job`. */
   createJob?: Maybe<CreateJobPayload>,
   /** Creates a single `Mile`. */
   createMile?: Maybe<CreateMilePayload>,
+  /** Deletes a single `Hour` using a unique key. */
+  deleteHour?: Maybe<DeleteHourPayload>,
   /** Deletes a single `Job` using a unique key. */
   deleteJob?: Maybe<DeleteJobPayload>,
   /** Deletes a single `Mile` using a unique key. */
@@ -626,6 +824,8 @@ export type Mutation = {
   registerUser?: Maybe<RegisterUserPayload>,
   unassignJobs?: Maybe<UnassignJobsPayload>,
   updateCurrentPassword?: Maybe<UpdateCurrentPasswordPayload>,
+  /** Updates a single `Hour` using a unique key and a patch. */
+  updateHour?: Maybe<UpdateHourPayload>,
   /** Updates a single `Job` using a unique key and a patch. */
   updateJob?: Maybe<UpdateJobPayload>,
   /** Updates a single `Mile` using a unique key and a patch. */
@@ -648,6 +848,12 @@ export type MutationAuthenticateArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateHourArgs = {
+  input: CreateHourInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateJobArgs = {
   input: CreateJobInput
 };
@@ -656,6 +862,12 @@ export type MutationCreateJobArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateMileArgs = {
   input: CreateMileInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteHourArgs = {
+  input: DeleteHourInput
 };
 
 
@@ -686,6 +898,12 @@ export type MutationUnassignJobsArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateCurrentPasswordArgs = {
   input: UpdateCurrentPasswordInput
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateHourArgs = {
+  input: UpdateHourInput
 };
 
 
@@ -758,6 +976,9 @@ export type Query = {
    __typename: 'Query',
   /** Gets the user who was identified by our JWT. */
   currentUser?: Maybe<User>,
+  hour?: Maybe<Hour>,
+  /** Reads and enables pagination through a set of `Hour`. */
+  hours?: Maybe<HoursConnection>,
   job?: Maybe<Job>,
   /** Reads and enables pagination through a set of `Job`. */
   jobs?: Maybe<JobsConnection>,
@@ -772,6 +993,25 @@ export type Query = {
   user?: Maybe<User>,
   /** Reads and enables pagination through a set of `User`. */
   users?: Maybe<UsersConnection>,
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryHourArgs = {
+  id: Scalars['UUID']
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryHoursArgs = {
+  after?: Maybe<Scalars['Cursor']>,
+  before?: Maybe<Scalars['Cursor']>,
+  condition?: Maybe<HourCondition>,
+  filter?: Maybe<HourFilter>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<Array<HoursOrderBy>>
 };
 
 
@@ -988,6 +1228,42 @@ export type UpdateCurrentPasswordPayload = {
   success?: Maybe<Scalars['Boolean']>,
 };
 
+/** All input for the `updateHour` mutation. */
+export type UpdateHourInput = {
+  /** 
+ * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  id: Scalars['UUID'],
+  /** An object where the defined keys will be set on the `Hour` being updated. */
+  patch: HourPatch,
+};
+
+/** The output of our update `Hour` mutation. */
+export type UpdateHourPayload = {
+   __typename: 'UpdateHourPayload',
+  /** 
+ * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+ */
+  clientMutationId?: Maybe<Scalars['String']>,
+  /** The `Hour` that was updated by this mutation. */
+  hour?: Maybe<Hour>,
+  /** An edge for our `Hour`. May be used by Relay 1. */
+  hourEdge?: Maybe<HoursEdge>,
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>,
+  /** Reads a single `User` that is related to this `Hour`. */
+  user?: Maybe<User>,
+};
+
+
+/** The output of our update `Hour` mutation. */
+export type UpdateHourPayloadHourEdgeArgs = {
+  orderBy?: Maybe<Array<HoursOrderBy>>
+};
+
 /** All input for the `updateJob` mutation. */
 export type UpdateJobInput = {
   /** 
@@ -1103,10 +1379,13 @@ export type User = {
   firstName: Scalars['String'],
   /** A persons full name which is a concatenation of their first and last name. */
   fullName?: Maybe<Scalars['String']>,
+  /** Reads and enables pagination through a set of `Hour`. */
+  hours: HoursConnection,
   /** The primary unique identifier for the user. */
   id: Scalars['UUID'],
   /** A boolean for admin status */
   isAdmin?: Maybe<Scalars['Boolean']>,
+  isHidden?: Maybe<Scalars['Boolean']>,
   /** Reads and enables pagination through a set of `Job`. */
   jobs: JobsConnection,
   /** A short description about the user. */
@@ -1116,6 +1395,18 @@ export type User = {
   /** Reads and enables pagination through a set of `Mile`. */
   miles: MilesConnection,
   updatedAt?: Maybe<Scalars['Datetime']>,
+};
+
+
+export type UserHoursArgs = {
+  after?: Maybe<Scalars['Cursor']>,
+  before?: Maybe<Scalars['Cursor']>,
+  condition?: Maybe<HourCondition>,
+  filter?: Maybe<HourFilter>,
+  first?: Maybe<Scalars['Int']>,
+  last?: Maybe<Scalars['Int']>,
+  offset?: Maybe<Scalars['Int']>,
+  orderBy?: Maybe<Array<HoursOrderBy>>
 };
 
 
@@ -1152,6 +1443,8 @@ export type UserCondition = {
   id?: Maybe<Scalars['UUID']>,
   /** Checks for equality with the object’s `isAdmin` field. */
   isAdmin?: Maybe<Scalars['Boolean']>,
+  /** Checks for equality with the object’s `isHidden` field. */
+  isHidden?: Maybe<Scalars['Boolean']>,
   /** Checks for equality with the object’s `jobTitle` field. */
   jobTitle?: Maybe<Scalars['String']>,
   /** Checks for equality with the object’s `lastName` field. */
@@ -1170,10 +1463,16 @@ export type UserFilter = {
   firstName?: Maybe<StringFilter>,
   /** Filter by the object’s `fullName` field. */
   fullName?: Maybe<StringFilter>,
+  /** Filter by the object’s `hours` relation. */
+  hours?: Maybe<UserToManyHourFilter>,
+  /** Some related `hours` exist. */
+  hoursExist?: Maybe<Scalars['Boolean']>,
   /** Filter by the object’s `id` field. */
   id?: Maybe<UuidFilter>,
   /** Filter by the object’s `isAdmin` field. */
   isAdmin?: Maybe<BooleanFilter>,
+  /** Filter by the object’s `isHidden` field. */
+  isHidden?: Maybe<BooleanFilter>,
   /** Filter by the object’s `jobs` relation. */
   jobs?: Maybe<UserToManyJobFilter>,
   /** Some related `jobs` exist. */
@@ -1204,6 +1503,7 @@ export type UserPatch = {
   id?: Maybe<Scalars['UUID']>,
   /** A boolean for admin status */
   isAdmin?: Maybe<Scalars['Boolean']>,
+  isHidden?: Maybe<Scalars['Boolean']>,
   /** A short description about the user. */
   jobTitle?: Maybe<Scalars['String']>,
   /** The users last name. */
@@ -1243,6 +1543,8 @@ export enum UsersOrderBy {
   IdDesc = 'ID_DESC',
   IsAdminAsc = 'IS_ADMIN_ASC',
   IsAdminDesc = 'IS_ADMIN_DESC',
+  IsHiddenAsc = 'IS_HIDDEN_ASC',
+  IsHiddenDesc = 'IS_HIDDEN_DESC',
   JobTitleAsc = 'JOB_TITLE_ASC',
   JobTitleDesc = 'JOB_TITLE_DESC',
   LastNameAsc = 'LAST_NAME_ASC',
@@ -1253,6 +1555,16 @@ export enum UsersOrderBy {
   UpdatedAtAsc = 'UPDATED_AT_ASC',
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
+
+/** A filter to be used against many `Hour` object types. All fields are combined with a logical ‘and.’ */
+export type UserToManyHourFilter = {
+  /** Every related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  every?: Maybe<HourFilter>,
+  /** No related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  none?: Maybe<HourFilter>,
+  /** Some related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’ */
+  some?: Maybe<HourFilter>,
+};
 
 /** A filter to be used against many `Job` object types. All fields are combined with a logical ‘and.’ */
 export type UserToManyJobFilter = {
@@ -1315,6 +1627,11 @@ export type MileInfoFragment = (
   & Pick<Mile, 'createdAt' | 'date' | 'distance' | 'id' | 'info' | 'updatedAt' | 'userId'>
 );
 
+export type HourInfoFragment = (
+  { __typename: 'Hour' }
+  & Pick<Hour, 'createdAt' | 'date' | 'duration' | 'id' | 'info' | 'updatedAt' | 'userId'>
+);
+
 export type UserMilesFragment = (
   { __typename: 'User' }
   & { miles: (
@@ -1322,6 +1639,17 @@ export type UserMilesFragment = (
     & { nodes: Array<(
       { __typename: 'Mile' }
       & MileInfoFragment
+    )> }
+  ) }
+);
+
+export type UserHoursFragment = (
+  { __typename: 'User' }
+  & { hours: (
+    { __typename: 'HoursConnection' }
+    & { nodes: Array<(
+      { __typename: 'Hour' }
+      & HourInfoFragment
     )> }
   ) }
 );
@@ -1367,6 +1695,7 @@ export type CurrentUserQuery = (
     { __typename: 'User' }
     & UserInfoFragment
     & UserMilesFragment
+    & UserHoursFragment
     & UserJobsFragment
   )> }
 );
@@ -1382,6 +1711,7 @@ export type UserQuery = (
     { __typename: 'User' }
     & UserInfoFragment
     & UserMilesFragment
+    & UserHoursFragment
     & UserJobsFragment
   )> }
 );
@@ -1397,6 +1727,7 @@ export type UsersQuery = (
       { __typename: 'User' }
       & UserInfoFragment
       & UserMilesFragment
+      & UserHoursFragment
       & UserJobsFragment
     )> }
   )> }
@@ -1461,6 +1792,55 @@ export type DeleteMileMutation = (
     & { mile: Maybe<(
       { __typename: 'Mile' }
       & MileInfoFragment
+    )> }
+  )> }
+);
+
+export type AddHourMutationVariables = {
+  hour: HourInput
+};
+
+
+export type AddHourMutation = (
+  { __typename: 'Mutation' }
+  & { createHour: Maybe<(
+    { __typename: 'CreateHourPayload' }
+    & { hour: Maybe<(
+      { __typename: 'Hour' }
+      & HourInfoFragment
+    )> }
+  )> }
+);
+
+export type EditHourMutationVariables = {
+  id: Scalars['UUID'],
+  patch: HourPatch
+};
+
+
+export type EditHourMutation = (
+  { __typename: 'Mutation' }
+  & { updateHour: Maybe<(
+    { __typename: 'UpdateHourPayload' }
+    & { hour: Maybe<(
+      { __typename: 'Hour' }
+      & HourInfoFragment
+    )> }
+  )> }
+);
+
+export type DeleteHourMutationVariables = {
+  id: Scalars['UUID']
+};
+
+
+export type DeleteHourMutation = (
+  { __typename: 'Mutation' }
+  & { deleteHour: Maybe<(
+    { __typename: 'DeleteHourPayload' }
+    & { hour: Maybe<(
+      { __typename: 'Hour' }
+      & HourInfoFragment
     )> }
   )> }
 );
@@ -1638,6 +2018,26 @@ export const UserMilesFragmentDoc = gql`
   }
 }
     ${MileInfoFragmentDoc}`;
+export const HourInfoFragmentDoc = gql`
+    fragment HourInfo on Hour {
+  createdAt
+  date
+  duration
+  id
+  info
+  updatedAt
+  userId
+}
+    `;
+export const UserHoursFragmentDoc = gql`
+    fragment UserHours on User {
+  hours {
+    nodes {
+      ...HourInfo
+    }
+  }
+}
+    ${HourInfoFragmentDoc}`;
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
   id
@@ -1723,11 +2123,13 @@ export const CurrentUserDocument = gql`
   currentUser {
     ...UserInfo
     ...UserMiles
+    ...UserHours
     ...UserJobs
   }
 }
     ${UserInfoFragmentDoc}
 ${UserMilesFragmentDoc}
+${UserHoursFragmentDoc}
 ${UserJobsFragmentDoc}`;
 export type CurrentUserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CurrentUserQuery, CurrentUserQueryVariables>, 'query'>;
 
@@ -1765,11 +2167,13 @@ export const UserDocument = gql`
   user(id: $id) {
     ...UserInfo
     ...UserMiles
+    ...UserHours
     ...UserJobs
   }
 }
     ${UserInfoFragmentDoc}
 ${UserMilesFragmentDoc}
+${UserHoursFragmentDoc}
 ${UserJobsFragmentDoc}`;
 export type UserComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<UserQuery, UserQueryVariables>, 'query'> & ({ variables: UserQueryVariables; skip?: boolean; } | { skip: boolean; });
 
@@ -1805,16 +2209,18 @@ export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = ApolloReactCommon.QueryResult<UserQuery, UserQueryVariables>;
 export const UsersDocument = gql`
     query Users {
-  users {
+  users(condition: {isHidden: false}) {
     nodes {
       ...UserInfo
       ...UserMiles
+      ...UserHours
       ...UserJobs
     }
   }
 }
     ${UserInfoFragmentDoc}
 ${UserMilesFragmentDoc}
+${UserHoursFragmentDoc}
 ${UserJobsFragmentDoc}`;
 export type UsersComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<UsersQuery, UsersQueryVariables>, 'query'>;
 
@@ -2007,6 +2413,127 @@ export function useDeleteMileMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type DeleteMileMutationHookResult = ReturnType<typeof useDeleteMileMutation>;
 export type DeleteMileMutationResult = ApolloReactCommon.MutationResult<DeleteMileMutation>;
 export type DeleteMileMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteMileMutation, DeleteMileMutationVariables>;
+export const AddHourDocument = gql`
+    mutation addHour($hour: HourInput!) {
+  createHour(input: {hour: $hour}) {
+    hour {
+      ...HourInfo
+    }
+  }
+}
+    ${HourInfoFragmentDoc}`;
+export type AddHourMutationFn = ApolloReactCommon.MutationFunction<AddHourMutation, AddHourMutationVariables>;
+export type AddHourComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddHourMutation, AddHourMutationVariables>, 'mutation'>;
+
+    export const AddHourComponent = (props: AddHourComponentProps) => (
+      <ApolloReactComponents.Mutation<AddHourMutation, AddHourMutationVariables> mutation={AddHourDocument} {...props} />
+    );
+    
+
+/**
+ * __useAddHourMutation__
+ *
+ * To run a mutation, you first call `useAddHourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddHourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addHourMutation, { data, loading, error }] = useAddHourMutation({
+ *   variables: {
+ *      hour: // value for 'hour'
+ *   },
+ * });
+ */
+export function useAddHourMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<AddHourMutation, AddHourMutationVariables>) {
+        return ApolloReactHooks.useMutation<AddHourMutation, AddHourMutationVariables>(AddHourDocument, baseOptions);
+      }
+export type AddHourMutationHookResult = ReturnType<typeof useAddHourMutation>;
+export type AddHourMutationResult = ApolloReactCommon.MutationResult<AddHourMutation>;
+export type AddHourMutationOptions = ApolloReactCommon.BaseMutationOptions<AddHourMutation, AddHourMutationVariables>;
+export const EditHourDocument = gql`
+    mutation editHour($id: UUID!, $patch: HourPatch!) {
+  updateHour(input: {patch: $patch, id: $id}) {
+    hour {
+      ...HourInfo
+    }
+  }
+}
+    ${HourInfoFragmentDoc}`;
+export type EditHourMutationFn = ApolloReactCommon.MutationFunction<EditHourMutation, EditHourMutationVariables>;
+export type EditHourComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditHourMutation, EditHourMutationVariables>, 'mutation'>;
+
+    export const EditHourComponent = (props: EditHourComponentProps) => (
+      <ApolloReactComponents.Mutation<EditHourMutation, EditHourMutationVariables> mutation={EditHourDocument} {...props} />
+    );
+    
+
+/**
+ * __useEditHourMutation__
+ *
+ * To run a mutation, you first call `useEditHourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditHourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editHourMutation, { data, loading, error }] = useEditHourMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      patch: // value for 'patch'
+ *   },
+ * });
+ */
+export function useEditHourMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<EditHourMutation, EditHourMutationVariables>) {
+        return ApolloReactHooks.useMutation<EditHourMutation, EditHourMutationVariables>(EditHourDocument, baseOptions);
+      }
+export type EditHourMutationHookResult = ReturnType<typeof useEditHourMutation>;
+export type EditHourMutationResult = ApolloReactCommon.MutationResult<EditHourMutation>;
+export type EditHourMutationOptions = ApolloReactCommon.BaseMutationOptions<EditHourMutation, EditHourMutationVariables>;
+export const DeleteHourDocument = gql`
+    mutation deleteHour($id: UUID!) {
+  deleteHour(input: {id: $id}) {
+    hour {
+      ...HourInfo
+    }
+  }
+}
+    ${HourInfoFragmentDoc}`;
+export type DeleteHourMutationFn = ApolloReactCommon.MutationFunction<DeleteHourMutation, DeleteHourMutationVariables>;
+export type DeleteHourComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteHourMutation, DeleteHourMutationVariables>, 'mutation'>;
+
+    export const DeleteHourComponent = (props: DeleteHourComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteHourMutation, DeleteHourMutationVariables> mutation={DeleteHourDocument} {...props} />
+    );
+    
+
+/**
+ * __useDeleteHourMutation__
+ *
+ * To run a mutation, you first call `useDeleteHourMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteHourMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteHourMutation, { data, loading, error }] = useDeleteHourMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteHourMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<DeleteHourMutation, DeleteHourMutationVariables>) {
+        return ApolloReactHooks.useMutation<DeleteHourMutation, DeleteHourMutationVariables>(DeleteHourDocument, baseOptions);
+      }
+export type DeleteHourMutationHookResult = ReturnType<typeof useDeleteHourMutation>;
+export type DeleteHourMutationResult = ApolloReactCommon.MutationResult<DeleteHourMutation>;
+export type DeleteHourMutationOptions = ApolloReactCommon.BaseMutationOptions<DeleteHourMutation, DeleteHourMutationVariables>;
 export const AddJobDocument = gql`
     mutation addJob($job: JobInput!) {
   createJob(input: {job: $job}) {

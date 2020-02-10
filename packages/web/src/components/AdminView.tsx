@@ -1,8 +1,3 @@
-import {
-  UserInfoFragment,
-  UserJobsFragment,
-  UserMilesFragment,
-} from '@trakrite/queries'
 import { Button } from './Button'
 import { Card } from './Card'
 import { Stack } from './Stack'
@@ -15,12 +10,9 @@ import { JobForm } from './JobForm'
 import { UserForm } from './UserForm'
 import { CardSet } from './CardSet'
 import Link from 'next/link'
+import { AppUser } from '../../types'
 
-export const AdminView = ({
-  user,
-}: {
-  user: UserInfoFragment & UserMilesFragment & UserJobsFragment
-}) => {
+export const AdminView = ({ user }: { user: AppUser }) => {
   const [addingUser, setAddingUser] = useState(false)
   const [addingJob, setAddingJob] = useState(false)
 

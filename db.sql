@@ -255,3 +255,29 @@ create or replace function public.unassign_jobs(jobs uuid[]) returns setof job a
 $$ language sql volatile strict security definer;
 
 grant execute on function public.unassign_jobs(uuid[]) to trakrite_anonymous, trakrite_user;
+
+
+-- Create our hour table
+create table public.hour (
+  id           uuid primary key default uuid_generate_v1mc(),
+  user_id      uuid references public.user(id) on delete cascade,
+  info         text not null,
+  duration     int not null,
+  date         timestamp not null default now(),
+  created_at   timestamp default now(),
+  updated_at   timestamp default now()
+);
+
+-- Set the 'updated_at' column every time we modify our hour table
+create trigger hour_updated_at before update
+  on public.hour
+  for each row
+  execute procedure trakrite_private.set_updated_at();
+
+-- Hours table permissions
+grant select on table public.hour to trakrite_anonymous, trakrite_user;
+grant insert, update, delete on table public.hour to trakrite_user;
+
+
+-- Add is_hidden column to users table
+alter table public.user add is_hidden bool default false
