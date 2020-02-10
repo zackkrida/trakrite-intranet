@@ -5,6 +5,7 @@ import { NextPage } from 'next'
 import { Page } from '../../components/Page'
 import { Card } from '../../components/Card'
 import { UserMiles } from '../../components/UserMiles'
+import { UserHours } from '../../components/UserHours'
 import { CardSet } from '../../components/CardSet'
 import { Stack } from '../../components/Stack'
 import { UserJobs } from '../../components/UserJobs'
@@ -13,12 +14,15 @@ import { useState } from 'react'
 import { Button } from '../../components/Button'
 import Dialog from '@reach/dialog'
 import { MileForm } from '../../components/MileForm'
+import { HourForm } from '../../components/HourForm'
 import { AssignJobForm } from '../../components/AssignJobForm'
 
 const User: NextPage<{}> = () => {
   const { query } = useRouter()
   const { data } = useUserQuery({ variables: { id: query.id } })
   const [addingMiles, setAddingMiles] = useState<CreationOptions>('INACTIVE')
+  const [addingHours, setAddingHours] = useState<CreationOptions>('INACTIVE')
+
   const [assigningJob, setAssigningJob] = useState<CreationOptions>('INACTIVE')
 
   const user = data?.user
@@ -82,6 +86,29 @@ const User: NextPage<{}> = () => {
               <MileForm
                 userId={user.id}
                 onComplete={() => setAddingMiles('INACTIVE')}
+              />
+            </Dialog>
+          </Stack>
+        </Card>
+
+        <Card
+          topRight={
+            <Button theme="PRIMARY" onClick={() => setAddingHours('ACTIVE')}>
+              Add Hours
+            </Button>
+          }
+        >
+          <Stack space="small">
+            <h1>Hours</h1>
+            <UserHours user={user} />
+
+            <Dialog
+              isOpen={addingHours === 'ACTIVE'}
+              onDismiss={() => setAddingHours('INACTIVE')}
+            >
+              <HourForm
+                userId={user.id}
+                onComplete={() => setAddingHours('INACTIVE')}
               />
             </Dialog>
           </Stack>

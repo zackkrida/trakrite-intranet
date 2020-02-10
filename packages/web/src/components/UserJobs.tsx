@@ -16,6 +16,7 @@ import toaster from 'toasted-notes'
 import { Row } from './Row'
 import { Button } from './Button'
 import { useApolloClient } from '@apollo/react-hooks'
+import { AppUser } from '../../types'
 
 const date = (str: string) => {
   const date = new Date(str)
@@ -32,7 +33,7 @@ export const UserJobs = ({
   limit = undefined,
   showUnassign = false,
 }: {
-  user: UserInfoFragment & UserJobsFragment
+  user: AppUser
   limit?: number
   showUnassign?: boolean
 }) => {

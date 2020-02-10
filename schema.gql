@@ -92,6 +92,44 @@ input BooleanFilter {
   notIn: [Boolean!]
 }
 
+"""All input for the create `Hour` mutation."""
+input CreateHourInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Hour` to be created by this mutation."""
+  hour: HourInput!
+}
+
+"""The output of our create `Hour` mutation."""
+type CreateHourPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Hour` that was created by this mutation."""
+  hour: Hour
+
+  """An edge for our `Hour`. May be used by Relay 1."""
+  hourEdge(
+    """The method to use when ordering `Hour`."""
+    orderBy: [HoursOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HoursEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Hour`."""
+  user: User
+}
+
 """All input for the create `Job` mutation."""
 input CreateJobInput {
   """
@@ -219,6 +257,43 @@ input DatetimeFilter {
   notIn: [Datetime!]
 }
 
+"""All input for the `deleteHour` mutation."""
+input DeleteHourInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: UUID!
+}
+
+"""The output of our delete `Hour` mutation."""
+type DeleteHourPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+  deletedHourNodeId: ID
+
+  """The `Hour` that was deleted by this mutation."""
+  hour: Hour
+
+  """An edge for our `Hour`. May be used by Relay 1."""
+  hourEdge(
+    """The method to use when ordering `Hour`."""
+    orderBy: [HoursOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HoursEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Hour`."""
+  user: User
+}
+
 """All input for the `deleteJob` mutation."""
 input DeleteJobInput {
   """
@@ -291,6 +366,155 @@ type DeleteMilePayload {
 
   """Reads a single `User` that is related to this `Mile`."""
   user: User
+}
+
+type Hour {
+  createdAt: Datetime
+  date: Datetime!
+  duration: Int!
+  id: UUID!
+  info: String!
+  updatedAt: Datetime
+
+  """Reads a single `User` that is related to this `Hour`."""
+  user: User
+  userId: UUID
+}
+
+"""
+A condition to be used against `Hour` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input HourCondition {
+  """Checks for equality with the object’s `createdAt` field."""
+  createdAt: Datetime
+
+  """Checks for equality with the object’s `date` field."""
+  date: Datetime
+
+  """Checks for equality with the object’s `duration` field."""
+  duration: Int
+
+  """Checks for equality with the object’s `id` field."""
+  id: UUID
+
+  """Checks for equality with the object’s `info` field."""
+  info: String
+
+  """Checks for equality with the object’s `updatedAt` field."""
+  updatedAt: Datetime
+
+  """Checks for equality with the object’s `userId` field."""
+  userId: UUID
+}
+
+"""
+A filter to be used against `Hour` object types. All fields are combined with a logical ‘and.’
+"""
+input HourFilter {
+  """Checks for all expressions in this list."""
+  and: [HourFilter!]
+
+  """Filter by the object’s `createdAt` field."""
+  createdAt: DatetimeFilter
+
+  """Filter by the object’s `date` field."""
+  date: DatetimeFilter
+
+  """Filter by the object’s `duration` field."""
+  duration: IntFilter
+
+  """Filter by the object’s `id` field."""
+  id: UUIDFilter
+
+  """Filter by the object’s `info` field."""
+  info: StringFilter
+
+  """Negates the expression."""
+  not: HourFilter
+
+  """Checks for any expressions in this list."""
+  or: [HourFilter!]
+
+  """Filter by the object’s `updatedAt` field."""
+  updatedAt: DatetimeFilter
+
+  """Filter by the object’s `user` relation."""
+  user: UserFilter
+
+  """A related `user` exists."""
+  userExists: Boolean
+
+  """Filter by the object’s `userId` field."""
+  userId: UUIDFilter
+}
+
+"""An input for mutations affecting `Hour`"""
+input HourInput {
+  createdAt: Datetime
+  date: Datetime
+  duration: Int!
+  id: UUID
+  info: String!
+  updatedAt: Datetime
+  userId: UUID
+}
+
+"""Represents an update to a `Hour`. Fields that are set will be updated."""
+input HourPatch {
+  createdAt: Datetime
+  date: Datetime
+  duration: Int
+  id: UUID
+  info: String
+  updatedAt: Datetime
+  userId: UUID
+}
+
+"""A connection to a list of `Hour` values."""
+type HoursConnection {
+  """
+  A list of edges which contains the `Hour` and cursor to aid in pagination.
+  """
+  edges: [HoursEdge!]!
+
+  """A list of `Hour` objects."""
+  nodes: [Hour!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Hour` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Hour` edge in the connection."""
+type HoursEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Hour` at the end of the edge."""
+  node: Hour!
+}
+
+"""Methods to use when ordering `Hour`."""
+enum HoursOrderBy {
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  DATE_ASC
+  DATE_DESC
+  DURATION_ASC
+  DURATION_DESC
+  ID_ASC
+  ID_DESC
+  INFO_ASC
+  INFO_DESC
+  NATURAL
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  USER_ID_ASC
+  USER_ID_DESC
 }
 
 """
@@ -737,6 +961,14 @@ type Mutation {
     input: AuthenticateInput!
   ): AuthenticatePayload
 
+  """Creates a single `Hour`."""
+  createHour(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateHourInput!
+  ): CreateHourPayload
+
   """Creates a single `Job`."""
   createJob(
     """
@@ -752,6 +984,14 @@ type Mutation {
     """
     input: CreateMileInput!
   ): CreateMilePayload
+
+  """Deletes a single `Hour` using a unique key."""
+  deleteHour(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteHourInput!
+  ): DeleteHourPayload
 
   """Deletes a single `Job` using a unique key."""
   deleteJob(
@@ -788,6 +1028,14 @@ type Mutation {
     """
     input: UpdateCurrentPasswordInput!
   ): UpdateCurrentPasswordPayload
+
+  """Updates a single `Hour` using a unique key and a patch."""
+  updateHour(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateHourInput!
+  ): UpdateHourPayload
 
   """Updates a single `Job` using a unique key and a patch."""
   updateJob(
@@ -883,6 +1131,41 @@ input PayStatusFilter {
 type Query {
   """Gets the user who was identified by our JWT."""
   currentUser: User
+  hour(id: UUID!): Hour
+
+  """Reads and enables pagination through a set of `Hour`."""
+  hours(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: HourCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: HourFilter
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `Hour`."""
+    orderBy: [HoursOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HoursConnection
   job(id: UUID!): Job
 
   """Reads and enables pagination through a set of `Job`."""
@@ -1195,6 +1478,47 @@ type UpdateCurrentPasswordPayload {
   success: Boolean
 }
 
+"""All input for the `updateHour` mutation."""
+input UpdateHourInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: UUID!
+
+  """
+  An object where the defined keys will be set on the `Hour` being updated.
+  """
+  patch: HourPatch!
+}
+
+"""The output of our update `Hour` mutation."""
+type UpdateHourPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Hour` that was updated by this mutation."""
+  hour: Hour
+
+  """An edge for our `Hour`. May be used by Relay 1."""
+  hourEdge(
+    """The method to use when ordering `Hour`."""
+    orderBy: [HoursOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HoursEdge
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `User` that is related to this `Hour`."""
+  user: User
+}
+
 """All input for the `updateJob` mutation."""
 input UpdateJobInput {
   """
@@ -1329,11 +1653,46 @@ type User {
   """
   fullName: String
 
+  """Reads and enables pagination through a set of `Hour`."""
+  hours(
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: HourCondition
+
+    """
+    A filter to be used in determining which values should be returned by the collection.
+    """
+    filter: HourFilter
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """The method to use when ordering `Hour`."""
+    orderBy: [HoursOrderBy!] = [PRIMARY_KEY_ASC]
+  ): HoursConnection!
+
   """The primary unique identifier for the user."""
   id: UUID!
 
   """A boolean for admin status"""
   isAdmin: Boolean
+  isHidden: Boolean
 
   """Reads and enables pagination through a set of `Job`."""
   jobs(
@@ -1427,6 +1786,9 @@ input UserCondition {
   """Checks for equality with the object’s `isAdmin` field."""
   isAdmin: Boolean
 
+  """Checks for equality with the object’s `isHidden` field."""
+  isHidden: Boolean
+
   """Checks for equality with the object’s `jobTitle` field."""
   jobTitle: String
 
@@ -1453,11 +1815,20 @@ input UserFilter {
   """Filter by the object’s `fullName` field."""
   fullName: StringFilter
 
+  """Filter by the object’s `hours` relation."""
+  hours: UserToManyHourFilter
+
+  """Some related `hours` exist."""
+  hoursExist: Boolean
+
   """Filter by the object’s `id` field."""
   id: UUIDFilter
 
   """Filter by the object’s `isAdmin` field."""
   isAdmin: BooleanFilter
+
+  """Filter by the object’s `isHidden` field."""
+  isHidden: BooleanFilter
 
   """Filter by the object’s `jobs` relation."""
   jobs: UserToManyJobFilter
@@ -1500,6 +1871,7 @@ input UserPatch {
 
   """A boolean for admin status"""
   isAdmin: Boolean
+  isHidden: Boolean
 
   """A short description about the user."""
   jobTitle: String
@@ -1545,6 +1917,8 @@ enum UsersOrderBy {
   ID_DESC
   IS_ADMIN_ASC
   IS_ADMIN_DESC
+  IS_HIDDEN_ASC
+  IS_HIDDEN_DESC
   JOB_TITLE_ASC
   JOB_TITLE_DESC
   LAST_NAME_ASC
@@ -1554,6 +1928,26 @@ enum UsersOrderBy {
   PRIMARY_KEY_DESC
   UPDATED_AT_ASC
   UPDATED_AT_DESC
+}
+
+"""
+A filter to be used against many `Hour` object types. All fields are combined with a logical ‘and.’
+"""
+input UserToManyHourFilter {
+  """
+  Every related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  every: HourFilter
+
+  """
+  No related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  none: HourFilter
+
+  """
+  Some related `Hour` matches the filter criteria. All fields are combined with a logical ‘and.’
+  """
+  some: HourFilter
 }
 
 """

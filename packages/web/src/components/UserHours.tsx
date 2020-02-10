@@ -1,16 +1,16 @@
 import Dialog from '@reach/dialog'
 import {
-  MileInfoFragment,
-  useDeleteMileMutation,
+  HourInfoFragment,
+  useDeleteHourMutation,
   UserInfoFragment,
-  UserMilesFragment,
+  UserHoursFragment,
 } from '@trakrite/queries'
 import format from 'date-fns/format'
 import Link from 'next/link'
 import { useState } from 'react'
 import toast from 'toasted-notes'
 import { Item } from './Item'
-import { MileForm } from './MileForm'
+import { HourForm } from './HourForm'
 import { TinyButton } from './TinyButton'
 import { AppUser } from '../../types'
 
@@ -24,29 +24,32 @@ const date = (str: string) => {
   }
 }
 
-export const UserMiles = ({
+const formatRelativeTimeLog = (minutes: number) =>
+  minutes < 60 ? `${minutes}min` : `${minutes / 60}hr`
+
+export const UserHours = ({
   user,
   limit = undefined,
 }: {
   user: AppUser
   limit?: number
 }) => {
-  const miles = user.miles.nodes
-  const [editingMiles, setEditingMiles] = useState<null | MileInfoFragment>(
+  const hours = user.hours.nodes
+  const [editingHours, setEditingHours] = useState<null | HourInfoFragment>(
     null
   )
-  const [deleteMile] = useDeleteMileMutation()
+  const [deleteHour] = useDeleteHourMutation()
 
   const handleDelete = async (id: number) => {
     try {
-      const { data, errors } = await deleteMile({
+      const { data, errors } = await deleteHour({
         variables: { id },
         refetchQueries: ['CurrentUser', 'User'],
       })
 
       if (!errors) {
         console.log(data)
-        toast.notify('Miles deleted.')
+        toast.notify('Hours deleted.')
       }
     } catch (error) {
       console.error(error)
@@ -55,20 +58,20 @@ export const UserMiles = ({
 
   return (
     <div>
-      {miles.length > 0 ? (
+      {hours.length > 0 ? (
         <>
-          {miles.slice(0, limit).map(mile => (
+          {hours.slice(0, limit).map(hour => (
             <Item
-              key={mile.id}
-              title={mile.info}
-              subtitle={<>{mile.distance}mi</>}
-              right={date(mile.date)}
+              key={hour.id}
+              title={hour.info}
+              subtitle={formatRelativeTimeLog(hour.duration)}
+              right={date(hour.date)}
               actions={
                 <>
-                  <TinyButton onClick={() => setEditingMiles(mile)}>
+                  <TinyButton onClick={() => setEditingHours(hour)}>
                     Edit
                   </TinyButton>
-                  <TinyButton onClick={() => handleDelete(mile.id)}>
+                  <TinyButton onClick={() => handleDelete(hour.id)}>
                     Delete
                   </TinyButton>
                 </>
@@ -79,7 +82,7 @@ export const UserMiles = ({
             <p style={{ lineHeight: 1 }}>
               <small>
                 Showing up to {limit} most recently added trips.{' '}
-                <Link href="/miles">
+                <Link href="/hours">
                   <a style={{ display: 'inline' }}>Click to view all.</a>
                 </Link>
               </small>
@@ -88,18 +91,18 @@ export const UserMiles = ({
         </>
       ) : (
         <>
-          <p>No miles logged yet.</p>
+          <p>No hours logged yet.</p>
         </>
       )}
 
       <Dialog
-        isOpen={editingMiles != null}
-        onDismiss={() => setEditingMiles(null)}
+        isOpen={editingHours != null}
+        onDismiss={() => setEditingHours(null)}
       >
-        <MileForm
+        <HourForm
           userId={user.id}
-          mile={editingMiles}
-          onComplete={() => setEditingMiles(null)}
+          hour={editingHours}
+          onComplete={() => setEditingHours(null)}
         />
       </Dialog>
     </div>

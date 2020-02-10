@@ -13,6 +13,7 @@ import {
 } from '@trakrite/queries'
 import { useApolloClient } from '@apollo/react-hooks'
 import Head from 'next/head'
+import { AppUser } from '../../types'
 
 const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
   const client = useApolloClient()
@@ -68,7 +69,12 @@ const Header = ({ currentUser }: { currentUser: CurrentUserType }) => {
                 </li>
                 <li>
                   <Link href="/miles">
-                    <a>My Miles</a>
+                    <a>Miles</a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/hours">
+                    <a>Hours</a>
                   </Link>
                 </li>
               </>
@@ -289,10 +295,7 @@ interface LayoutProps {
   children: React.ReactNode | CurrentUserRenderProp
 }
 
-type CurrentUserType =
-  | (UserInfoFragment & UserMilesFragment & UserJobsFragment)
-  | null
-  | undefined
+type CurrentUserType = AppUser | null | undefined
 
 const HomeIcon = () => (
   <svg
