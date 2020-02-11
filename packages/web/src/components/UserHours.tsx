@@ -24,9 +24,6 @@ const date = (str: string) => {
   }
 }
 
-const formatRelativeTimeLog = (minutes: number) =>
-  minutes < 60 ? `${minutes}min` : `${minutes / 60}hr`
-
 export const UserHours = ({
   user,
   limit = undefined,
@@ -64,7 +61,7 @@ export const UserHours = ({
             <Item
               key={hour.id}
               title={hour.info}
-              subtitle={formatRelativeTimeLog(hour.duration)}
+              subtitle={`${hour.duration}hrs`}
               right={date(hour.date)}
               actions={
                 <>
