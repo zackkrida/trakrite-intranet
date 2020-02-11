@@ -101,7 +101,7 @@ export const HourForm = ({
         <h1>{hour ? 'Edit' : 'Add'} hours</h1>
 
         <Input
-          label="Duration (In minutes)"
+          label="Duration (in hours)"
           type="number"
           value={duration}
           onChange={event => setDuration(parseInt(event.currentTarget.value))}
